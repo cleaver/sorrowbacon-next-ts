@@ -6,7 +6,7 @@ type Props = {
   comic: ComicEntity;
 };
 
-const HomePage = ({ comic }: Props) => {
+function HomePage({ comic }: Props) {
   const imageData = comic?.attributes?.image.data;
 
   if (!Array.isArray(imageData)) {
@@ -24,7 +24,7 @@ const HomePage = ({ comic }: Props) => {
       </div>
     </article>
   );
-};
+}
 
 export async function getStaticProps() {
   const comic = await getFrontPage();
