@@ -1,4 +1,4 @@
-import Image from 'next/future/image';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import logo from '../../public/sb-logo.jpg';
@@ -13,7 +13,9 @@ function Header() {
         <Image src={logo} alt="sorrowbacon logo" height={100} width={100} />
       </Link>
       <div className="flex-1 pt-6 pl-6">
-        <h1 className="text-3xl font-bold">sorrowbacon</h1>
+        <Link href={'/'}>
+          <h1 className="text-3xl font-bold">sorrowbacon</h1>
+        </Link>
       </div>
       <div className="h-25 flex flex-col">
         <div id="socials" className="flex space-x-1">

@@ -1,4 +1,4 @@
-import Image from 'next/future/image';
+import Image from 'next/image';
 import { UploadFileEntity } from '../../types/types';
 import { imageServer } from '../../lib/config';
 
