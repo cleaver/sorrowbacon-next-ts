@@ -1,12 +1,14 @@
 import { ComicEntity } from '../types/types';
 import ComicList from '../components/comic/comic-list';
-import { getFrontPage } from '../lib/api';
+import { getFrontPage, getPrevNextForSlug, PrevNextElement } from '../lib/api';
+import PrevNextNav from '../components/comic/prev-next-nav';
 
 type Props = {
   comic: ComicEntity;
+  prevNext: PrevNextElement;
 };
 
-function HomePage({ comic }: Props) {
+function HomePage({ comic, prevNext }: Props) {
   const imageData = comic?.attributes?.image.data;
 
   if (!Array.isArray(imageData)) {
@@ -16,6 +18,7 @@ function HomePage({ comic }: Props) {
   return (
     <article>
       <div>
+        <PrevNextNav prevNext={prevNext} />
         <ComicList
           images={comic?.attributes?.image.data}
           imageAltText={comic?.attributes?.image_alt_text || ''}
@@ -28,10 +31,13 @@ function HomePage({ comic }: Props) {
 
 export async function getStaticProps() {
   const comic = await getFrontPage();
+  const slug = comic?.attributes?.slug || '';
+  const prevNext = await getPrevNextForSlug(slug);
 
   return {
     props: {
       comic: comic,
+      prevNext: prevNext,
     },
   };
 }
