@@ -30,9 +30,6 @@ export async function getStaticProps() {
   const url = apiServer + '/graphql';
   const apiKey = process.env.API_KEY;
 
-  console.log('url:', url);
-  console.log('apiKey:', apiKey);
-
   const comicResult = await fetch(url, {
     method: 'POST',
     headers: {
