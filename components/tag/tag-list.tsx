@@ -2,12 +2,12 @@ import Link from 'next/link';
 import { TagRelationResponseCollection } from '../../types/types';
 
 type Props = {
-  tags: TagRelationResponseCollection | undefined;
+  tags: TagRelationResponseCollection | null | undefined;
 };
 
 function TagList({ tags }: Props) {
   if (!tags || tags.data.length === 0) {
-    return;
+    return <></>;
   }
   return (
     <div className="flex">
