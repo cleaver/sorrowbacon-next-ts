@@ -30,6 +30,7 @@ export async function getFrontPage() {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
+      Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
       query: `
@@ -64,9 +65,6 @@ export async function getFrontPage() {
           }
         }
       }`,
-      variables: {
-        Authorization: `Bearer ${apiKey}`,
-      },
     }),
   });
   const comicData = await comicResult.json();
@@ -87,6 +85,7 @@ export async function getComicBySlug(slug: string) {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
+      Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
       query: `
@@ -125,7 +124,6 @@ export async function getComicBySlug(slug: string) {
           }
         }`,
       variables: {
-        Authorization: `Bearer ${apiKey}`,
         slug: slug,
       },
     }),
@@ -147,6 +145,7 @@ export async function getAllSlugs() {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
+      Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
       query: `
@@ -159,9 +158,6 @@ export async function getAllSlugs() {
             }
           }
         }`,
-      variables: {
-        Authorization: `Bearer ${apiKey}`,
-      },
     }),
   });
 
@@ -223,6 +219,7 @@ export async function getTagLinksBySlug(slug: string) {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
+      Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
       query: `
@@ -247,7 +244,6 @@ export async function getTagLinksBySlug(slug: string) {
         }
       `,
       variables: {
-        Authorization: `Bearer ${apiKey}`,
         slug: slug,
       },
     }),
@@ -269,6 +265,7 @@ export async function getAllTagSlugs() {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
+      Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
       query: `
@@ -282,9 +279,6 @@ export async function getAllTagSlugs() {
           }
         }
       `,
-      variables: {
-        Authorization: `Bearer ${apiKey}`,
-      },
     }),
   });
 
@@ -307,4 +301,55 @@ export async function getAllTagSlugs() {
   );
 
   return slugsArray;
+}
+
+export async function getAbout() {
+  const result = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      query: `
+        query About {
+          about {
+            data {
+              id
+              attributes {
+                title
+                blocks {
+                  __typename
+                  ...on ComponentSharedQuote {
+                    title
+                    body
+                  }
+                  ...on ComponentSharedRichText {
+                    body
+                  }
+                  ...on ComponentSharedMedia {
+                    file {
+                      data {
+                        id
+                        attributes{
+                          name
+                          alternativeText
+                          url
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      `,
+    }),
+  });
+
+  const aboutJson = await result.json();
+  const about = aboutJson.data?.about;
+  return about;
 }
