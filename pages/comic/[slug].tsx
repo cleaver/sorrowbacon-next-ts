@@ -6,8 +6,7 @@ import {
   getPrevNextForSlug,
   PrevNextElement,
 } from '../../lib/api';
-import ComicList from '../../components/comic/comic-list';
-import PrevNextNav from '../../components/comic/prev-next-nav';
+import ComicSection from '../../components/comic/comic-section';
 
 type Props = {
   comic: ComicEntity;
@@ -15,25 +14,7 @@ type Props = {
 };
 
 function ComicPage({ comic, prevNext }: Props) {
-  const imageData = comic?.attributes?.image.data;
-
-  if (!Array.isArray(imageData)) {
-    return <article></article>;
-  }
-
-  return (
-    <article>
-      <div>
-        <PrevNextNav prevNext={prevNext} />
-
-        <ComicList
-          images={comic?.attributes?.image.data}
-          imageAltText={comic?.attributes?.image_alt_text || ''}
-        />
-        <h1>{comic?.attributes?.title}</h1>
-      </div>
-    </article>
-  );
+  return <ComicSection comic={comic} prevNext={prevNext} />;
 }
 
 export async function getStaticProps(ctx: GetStaticPropsContext) {

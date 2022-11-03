@@ -1,5 +1,16 @@
+/**
+ * @file lib/api.ts
+ *
+ * API for static generation (SSG).
+ *
+ */
+
 import { apiServer, apiKey } from '../lib/config';
-import { ComicEntity } from '../types/types';
+import {
+  ComicEntity,
+  TagEntity,
+  TagEntityResponseCollection,
+} from '../types/types';
 
 const url = apiServer + '/graphql';
 
@@ -8,6 +19,11 @@ export type PrevNextElement = {
   next: string | null;
 };
 
+/**
+ * Get the comic for the front page.
+ *
+ * @returns comic
+ */
 export async function getFrontPage() {
   const comicResult = await fetch(url, {
     method: 'POST',
@@ -36,7 +52,7 @@ export async function getFrontPage() {
                   }
                 }
               }
-              tag {
+              tags {
                 data {
                   attributes {
                     name
@@ -59,6 +75,12 @@ export async function getFrontPage() {
   return comic;
 }
 
+/**
+ * Get a single comic by slug.
+ *
+ * @param slug The unique slug for the comic.
+ * @returns comic
+ */
 export async function getComicBySlug(slug: string) {
   const comicResult = await fetch(url, {
     method: 'POST',
@@ -90,7 +112,7 @@ export async function getComicBySlug(slug: string) {
                     }
                   }
                 }
-                tag {
+                tags {
                   data {
                     attributes {
                       name
@@ -114,6 +136,11 @@ export async function getComicBySlug(slug: string) {
   return comic;
 }
 
+/**
+ * Get all the published comic slugs.
+ *
+ * @returns an array of all comic slugs
+ */
 export async function getAllSlugs() {
   const slugsResult = await fetch(url, {
     method: 'POST',
@@ -123,15 +150,15 @@ export async function getAllSlugs() {
     },
     body: JSON.stringify({
       query: `
-      query Slugs {
-        comics(sort: "post_date:asc", pagination: {pageSize: 9999}) {
-          data {
-            attributes {
-              slug
+        query Slugs {
+          comics(sort: "post_date:asc", pagination: {pageSize: 9999}) {
+            data {
+              attributes {
+                slug
+              }
             }
           }
-        }
-      }`,
+        }`,
       variables: {
         Authorization: `Bearer ${apiKey}`,
       },
@@ -150,6 +177,11 @@ export async function getAllSlugs() {
   return slugsArray;
 }
 
+/**
+ * Get a map of previous and next for each published comic.
+ *
+ * @returns a map of previous and next for each comic.
+ */
 async function getPrevNextMap() {
   const orderedSlugs = await getAllSlugs();
   const prevNextMap = new Map<string, PrevNextElement>();
@@ -169,6 +201,110 @@ async function getPrevNextMap() {
   return prevNextMap;
 }
 
+/**
+ * Get the previous and next slugs for a given comic.
+ *
+ * @param slug identifies the comic.
+ * @returns prev and next slug for the comic.
+ */
 export async function getPrevNextForSlug(slug: string) {
   return (await getPrevNextMap()).get(slug);
+}
+
+/**
+ * Get tag  by slug.
+ *
+ * @param slug The unique slug for the tag.
+ * @returns tag with partially populated comics (slug and title).
+ */
+export async function getTagLinksBySlug(slug: string) {
+  const tagResult = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify({
+      query: `
+        query TagBySlug($slug: String) {
+          tags(filters: { slug: { eq: $slug } }, pagination: { page: 1, pageSize: 1 }) {
+            data {
+              id
+              attributes {
+                slug
+                name
+                comics {
+                  data {
+                    attributes {
+                      title
+                      slug
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      `,
+      variables: {
+        Authorization: `Bearer ${apiKey}`,
+        slug: slug,
+      },
+    }),
+  });
+  const tagData = await tagResult.json();
+
+  const tagArray = tagData?.data?.tags?.data;
+  const tag: TagEntity = Array.isArray(tagArray) ? tagArray[0] : {};
+  return tag;
+}
+
+/**
+ * Get an array containing all tag slugs.
+ * @returns array of tag slugs
+ */
+export async function getAllTagSlugs() {
+  const result = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify({
+      query: `
+        query Tags {
+          tags(pagination: {pageSize: 9999 }) {
+            data {
+              attributes {
+                slug
+              }
+            }
+          }
+        }
+      `,
+      variables: {
+        Authorization: `Bearer ${apiKey}`,
+      },
+    }),
+  });
+
+  const tagsJson = await result.json();
+  const tagData: TagEntityResponseCollection = tagsJson?.data?.tags;
+  const tagArray = tagData.data;
+
+  if (!Array.isArray(tagArray)) {
+    return [];
+  }
+
+  const slugsArray = tagArray.reduce(
+    (notUndefined: string[], maybeUndefinedTag) => {
+      if (!!maybeUndefinedTag.attributes?.slug) {
+        notUndefined.push(maybeUndefinedTag.attributes?.slug);
+      }
+      return notUndefined;
+    },
+    []
+  );
+
+  return slugsArray;
 }

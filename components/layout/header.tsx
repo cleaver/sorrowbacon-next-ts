@@ -9,11 +9,11 @@ import igIcon from '../../public/sb-ig-icon.png';
 function Header() {
   return (
     <header className="flex h-25 mt-6">
-      <Link href={'/'}>
+      <Link href={'/'} title="Sorrowbacon home">
         <Image src={logo} alt="sorrowbacon logo" height={100} width={100} />
       </Link>
       <div className="flex-1 pt-6 pl-6">
-        <Link href={'/'}>
+        <Link href={'/'} title="Sorrowbacon home">
           <h1 className="text-3xl font-bold">sorrowbacon</h1>
         </Link>
       </div>
