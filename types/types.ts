@@ -657,7 +657,7 @@ export type ComicFiltersInput = {
   slug?: Maybe<StringFilterInput>;
   meta_description?: Maybe<StringFilterInput>;
   image_alt_text?: Maybe<StringFilterInput>;
-  tag?: Maybe<TagFiltersInput>;
+  tags?: Maybe<TagFiltersInput>;
   createdAt?: Maybe<DateTimeFilterInput>;
   updatedAt?: Maybe<DateTimeFilterInput>;
   publishedAt?: Maybe<DateTimeFilterInput>;
@@ -674,7 +674,7 @@ export type ComicInput = {
   slug?: Maybe<Scalars['String']>;
   meta_description?: Maybe<Scalars['String']>;
   image_alt_text?: Maybe<Scalars['String']>;
-  tag?: Maybe<Scalars['ID']>;
+  tags?: Maybe<Array<Maybe<Scalars['ID']>>>;
   publishedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -687,7 +687,7 @@ export type Comic = {
   slug: Scalars['String'];
   meta_description?: Maybe<Scalars['String']>;
   image_alt_text?: Maybe<Scalars['String']>;
-  tag?: Maybe<TagEntityResponse>;
+  tags?: Maybe<TagRelationResponseCollection>;
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
   publishedAt?: Maybe<Scalars['DateTime']>;
@@ -695,6 +695,12 @@ export type Comic = {
 
 export type ComicImageArgs = {
   filters?: Maybe<UploadFileFiltersInput>;
+  pagination?: Maybe<PaginationArg>;
+  sort?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type ComicTagsArgs = {
+  filters?: Maybe<TagFiltersInput>;
   pagination?: Maybe<PaginationArg>;
   sort?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
@@ -805,6 +811,11 @@ export type TagEntityResponseCollection = {
   __typename?: 'TagEntityResponseCollection';
   data: Array<TagEntity>;
   meta: ResponseCollectionMeta;
+};
+
+export type TagRelationResponseCollection = {
+  __typename?: 'TagRelationResponseCollection';
+  data: Array<TagEntity>;
 };
 
 export type GenericMorph =
