@@ -7,9 +7,9 @@ type Props = {
 
 function RichText({ block }: Props) {
   return (
-    <div className="my-4">
+    <section className="my-4">
       <ReactMarkdown>{block.body || ''}</ReactMarkdown>
-    </div>
+    </section>
   );
 }
 

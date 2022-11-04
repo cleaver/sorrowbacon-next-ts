@@ -7,7 +7,7 @@ type Props = {
 
 function TagList({ tags }: Props) {
   if (!tags || tags.data.length === 0) {
-    return <></>;
+    return null;
   }
   return (
     <div className="flex">

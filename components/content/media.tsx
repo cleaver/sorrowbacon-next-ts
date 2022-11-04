@@ -12,9 +12,15 @@ function Media({ block }: Props) {
   const imageAltText = fileAttributes?.alternativeText || '';
 
   return (
-    <div className="my-4">
-      <Image src={imageUrl} alt={imageAltText} width={1000} height={1000} />
-    </div>
+    <section className="my-4">
+      <Image
+        src={imageUrl}
+        alt={imageAltText}
+        width={512}
+        height={512}
+        className="max-w-lg"
+      />
+    </section>
   );
 }
 

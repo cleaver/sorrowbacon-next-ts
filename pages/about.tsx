@@ -11,9 +11,6 @@ function AboutPage({ about }: Props) {
   const maybeBlocksArray = about.data?.attributes?.blocks;
   const blocks = Array.isArray(maybeBlocksArray) ? maybeBlocksArray : [];
 
-  console.log('about: ', about);
-  console.log('title: ', title);
-
   return (
     <article>
       <h1>{title}</h1>

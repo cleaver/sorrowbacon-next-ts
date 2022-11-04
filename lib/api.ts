@@ -5,7 +5,12 @@
  *
  */
 import { accessCache } from 'next-build-cache';
-import { apiServer, apiKey, buildCacheFile } from '../lib/config';
+import {
+  apiServer,
+  apiKey,
+  buildCacheFile,
+  archivePageSize,
+} from '../lib/config';
 import {
   ComicEntity,
   TagEntity,
@@ -204,8 +209,6 @@ export async function getPrevNextForSlug(slug: string) {
 
   if (!map) {
     map = await getPrevNextMap();
-    console.log('new map');
-    console.log(map);
 
     await cache.put('prev-next-map', map, 30 * 1000);
   }
@@ -336,4 +339,60 @@ export async function getAbout() {
   const aboutJson = await result.json();
   const about = aboutJson.data?.about;
   return about;
+}
+
+export async function getArchivePage(pageNumber: number) {
+  const result = await apiCall(
+    `
+    query ArchiveList($page: Int, $pageSize: Int) {
+      comics(sort: "post_date:desc", pagination: {page: $page, pageSize: $pageSize}) {
+        data {
+          attributes{
+            slug
+            title
+          }
+        }
+        meta {
+          pagination {
+            page
+            pageSize
+            pageCount
+          }
+        }
+      }
+    }
+  `,
+    {
+      page: pageNumber,
+      pageSize: archivePageSize,
+    }
+  );
+  const archiveJson = await result.json();
+  const archiveList = archiveJson.data?.comics?.data;
+
+  return archiveList;
+}
+
+export async function getArchivePageCount() {
+  const result = await apiCall(
+    `
+    query ArchivePageCount($pageSize: Int) {
+      comics(sort: "post_date:desc", pagination: {pageSize: $pageSize}) {
+        meta {
+          pagination {
+            pageCount
+          }
+        }
+      }
+    }
+    `,
+    { pageSize: archivePageSize }
+  );
+
+  const pageCountJson = await result.json();
+
+  const pageCount =
+    pageCountJson.data?.comics?.meta?.pagination?.pageCount || 1;
+
+  return pageCount;
 }

@@ -9,7 +9,7 @@ type Props = {
 
 function DynamicContent({ blocks }: Props) {
   if (!blocks || !Array.isArray(blocks)) {
-    return <></>;
+    return null;
   }
 
   let dynamicBlocks = [<></>];

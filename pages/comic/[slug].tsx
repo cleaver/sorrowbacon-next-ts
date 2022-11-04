@@ -36,7 +36,7 @@ export async function getStaticProps(ctx: GetStaticPropsContext) {
   };
 }
 
-export async function getStaticPaths(ctx: GetStaticPathsContext) {
+export async function getStaticPaths() {
   const slugs = await getAllSlugs();
   return {
     paths: slugs.map((slug) => {
