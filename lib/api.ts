@@ -4,8 +4,8 @@
  * API for static generation (SSG).
  *
  */
-
-import { apiServer, apiKey } from '../lib/config';
+import { accessCache } from 'next-build-cache';
+import { apiServer, apiKey, buildCacheFile } from '../lib/config';
 import {
   ComicEntity,
   TagEntity,
@@ -19,13 +19,8 @@ export type PrevNextElement = {
   next: string | null;
 };
 
-/**
- * Get the comic for the front page.
- *
- * @returns comic
- */
-export async function getFrontPage() {
-  const comicResult = await fetch(url, {
+async function apiCall(query: string, variables = {}) {
+  return await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -33,7 +28,20 @@ export async function getFrontPage() {
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      query: `
+      query: query,
+      variables: variables,
+    }),
+  });
+}
+
+/**
+ * Get the comic for the front page.
+ *
+ * @returns comic
+ */
+export async function getFrontPage() {
+  const comicResult = await apiCall(
+    `
       {
         comics(sort: "post_date:desc", pagination: {page:1, pageSize: 1}) {
           data {
@@ -64,9 +72,9 @@ export async function getFrontPage() {
             }
           }
         }
-      }`,
-    }),
-  });
+      }
+    `
+  );
   const comicData = await comicResult.json();
   const comicArray = comicData?.data?.comics?.data;
   const comic: ComicEntity = Array.isArray(comicArray) ? comicArray[0] : {};
@@ -80,54 +88,47 @@ export async function getFrontPage() {
  * @returns comic
  */
 export async function getComicBySlug(slug: string) {
-  const comicResult = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      query: `
-        query ComicBySlug($slug: String) {
-          comics(
-            filters: { slug: { eq: $slug } }
-            pagination: { page: 1, pageSize: 1 }
-          ) {
-            data {
-              id
-              attributes {
-                title
-                body
-                slug
-                post_date
-                meta_description
-                image_alt_text
-                image {
-                  data {
-                    attributes {
-                      name
-                      url
-                    }
+  const comicResult = await apiCall(
+    `
+      query ComicBySlug($slug: String) {
+        comics(
+          filters: { slug: { eq: $slug } }
+          pagination: { page: 1, pageSize: 1 }
+        ) {
+          data {
+            id
+            attributes {
+              title
+              body
+              slug
+              post_date
+              meta_description
+              image_alt_text
+              image {
+                data {
+                  attributes {
+                    name
+                    url
                   }
                 }
-                tags {
-                  data {
-                    attributes {
-                      name
-                      slug
-                    }
+              }
+              tags {
+                data {
+                  attributes {
+                    name
+                    slug
                   }
                 }
               }
             }
           }
-        }`,
-      variables: {
-        slug: slug,
-      },
-    }),
-  });
+        }
+      }
+    `,
+    {
+      slug: slug,
+    }
+  );
   const comicData = await comicResult.json();
   const comicArray = comicData?.data?.comics?.data;
   const comic: ComicEntity = Array.isArray(comicArray) ? comicArray[0] : {};
@@ -140,26 +141,19 @@ export async function getComicBySlug(slug: string) {
  * @returns an array of all comic slugs
  */
 export async function getAllSlugs() {
-  const slugsResult = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      query: `
-        query Slugs {
-          comics(sort: "post_date:asc", pagination: {pageSize: 9999}) {
-            data {
-              attributes {
-                slug
-              }
+  const slugsResult = await apiCall(
+    `
+      query Slugs {
+        comics(sort: "post_date:asc", pagination: {pageSize: 9999}) {
+          data {
+            attributes {
+              slug
             }
           }
-        }`,
-    }),
-  });
+        }
+      }
+    `
+  );
 
   const slugsData = await slugsResult.json();
   const dataArray = slugsData?.data?.comics?.data;
@@ -178,20 +172,20 @@ export async function getAllSlugs() {
  *
  * @returns a map of previous and next for each comic.
  */
-async function getPrevNextMap() {
+async function getPrevNextMap(): Promise<object> {
   const orderedSlugs = await getAllSlugs();
-  const prevNextMap = new Map<string, PrevNextElement>();
+  const prevNextMap: any = {};
 
   orderedSlugs.forEach((slug, index) => {
     if (index === 0) {
-      prevNextMap.set(slug, { prev: null, next: orderedSlugs[1] });
+      prevNextMap[slug] = { prev: null, next: orderedSlugs[1] };
     } else if (index >= orderedSlugs.length - 1) {
-      prevNextMap.set(slug, { prev: orderedSlugs[index - 1], next: null });
+      prevNextMap[slug] = { prev: orderedSlugs[index - 1], next: null };
     } else {
-      prevNextMap.set(slug, {
+      prevNextMap[slug] = {
         prev: orderedSlugs[index - 1],
         next: orderedSlugs[index + 1],
-      });
+      };
     }
   });
   return prevNextMap;
@@ -204,7 +198,21 @@ async function getPrevNextMap() {
  * @returns prev and next slug for the comic.
  */
 export async function getPrevNextForSlug(slug: string) {
-  return (await getPrevNextMap()).get(slug);
+  const cache = accessCache(buildCacheFile);
+
+  let map: any = await cache.get('prev-next-map');
+
+  if (!map) {
+    map = await getPrevNextMap();
+    console.log('new map');
+    console.log(map);
+
+    await cache.put('prev-next-map', map, 30 * 1000);
+  }
+
+  const prevNext: PrevNextElement | null = map[slug] || null;
+
+  return prevNext;
 }
 
 /**
@@ -214,40 +222,32 @@ export async function getPrevNextForSlug(slug: string) {
  * @returns tag with partially populated comics (slug and title).
  */
 export async function getTagLinksBySlug(slug: string) {
-  const tagResult = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      query: `
-        query TagBySlug($slug: String) {
-          tags(filters: { slug: { eq: $slug } }, pagination: { page: 1, pageSize: 1 }) {
-            data {
-              id
-              attributes {
-                slug
-                name
-                comics {
-                  data {
-                    attributes {
-                      title
-                      slug
-                    }
+  const tagResult = await apiCall(
+    `
+      query TagBySlug($slug: String) {
+        tags(filters: { slug: { eq: $slug } }, pagination: { page: 1, pageSize: 1 }) {
+          data {
+            id
+            attributes {
+              slug
+              name
+              comics {
+                data {
+                  attributes {
+                    title
+                    slug
                   }
                 }
               }
             }
           }
         }
-      `,
-      variables: {
-        slug: slug,
-      },
-    }),
-  });
+      }
+    `,
+    {
+      slug: slug,
+    }
+  );
   const tagData = await tagResult.json();
 
   const tagArray = tagData?.data?.tags?.data;
@@ -260,27 +260,19 @@ export async function getTagLinksBySlug(slug: string) {
  * @returns array of tag slugs
  */
 export async function getAllTagSlugs() {
-  const result = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      query: `
-        query Tags {
-          tags(pagination: {pageSize: 9999 }) {
-            data {
-              attributes {
-                slug
-              }
+  const result = await apiCall(
+    `
+      query Tags {
+        tags(pagination: {pageSize: 9999 }) {
+          data {
+            attributes {
+              slug
             }
           }
         }
-      `,
-    }),
-  });
+      }
+    `
+  );
 
   const tagsJson = await result.json();
   const tagData: TagEntityResponseCollection = tagsJson?.data?.tags;
@@ -304,39 +296,31 @@ export async function getAllTagSlugs() {
 }
 
 export async function getAbout() {
-  const result = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      query: `
-        query About {
-          about {
-            data {
-              id
-              attributes {
-                title
-                blocks {
-                  __typename
-                  ...on ComponentSharedQuote {
-                    title
-                    body
-                  }
-                  ...on ComponentSharedRichText {
-                    body
-                  }
-                  ...on ComponentSharedMedia {
-                    file {
-                      data {
-                        id
-                        attributes{
-                          name
-                          alternativeText
-                          url
-                        }
+  const result = await apiCall(
+    `
+      query About {
+        about {
+          data {
+            id
+            attributes {
+              title
+              blocks {
+                __typename
+                ...on ComponentSharedQuote {
+                  title
+                  body
+                }
+                ...on ComponentSharedRichText {
+                  body
+                }
+                ...on ComponentSharedMedia {
+                  file {
+                    data {
+                      id
+                      attributes{
+                        name
+                        alternativeText
+                        url
                       }
                     }
                   }
@@ -345,9 +329,9 @@ export async function getAbout() {
             }
           }
         }
-      `,
-    }),
-  });
+      }
+    `
+  );
 
   const aboutJson = await result.json();
   const about = aboutJson.data?.about;
