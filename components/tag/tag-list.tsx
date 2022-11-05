@@ -13,14 +13,19 @@ function TagList({ tags }: Props) {
     <div className="flex">
       <div className="flex-shrink font-bold">Tags:</div>
       <div className="flex-grow">
-        <ul>
+        <ul className="list-none m-0">
           {tags.data.map((tag) => {
             const slug = tag.attributes?.slug;
             const name = tag.attributes?.name;
 
             return (
-              <li key={slug}>
-                <Link href={`/tags/${slug}`}>{name}</Link>
+              <li className="mt-0 mb-3" key={slug}>
+                <Link
+                  href={`/tags/${slug}`}
+                  className="no-underline hover:underline active:underline"
+                >
+                  {name}
+                </Link>
               </li>
             );
           })}

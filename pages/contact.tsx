@@ -1,7 +1,7 @@
 function ContactPage() {
   return (
     <article>
-      <h1>Contact</h1>
+      <h1 className="mt-6">Contact</h1>
       <div className="font-mono leading-5">
         &nbsp;/\_/\
         <br />

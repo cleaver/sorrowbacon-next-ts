@@ -1,7 +1,7 @@
 import { GetStaticPropsContext } from 'next';
 import { useRouter } from 'next/router';
 import ArchiveList from '../../components/comic/archive-list';
-import ArchiveNav from '../../components/comic/archive-nav';
+import ArchivePager from '../../components/comic/archive-pager';
 import { getArchivePage, getArchivePageCount } from '../../lib/api';
 import { ComicEntity } from '../../types/types';
 
@@ -21,9 +21,9 @@ function ArchivePage({ comics, pageCount }: Props) {
 
   return (
     <article>
-      <h1>Archive</h1>
-      <ArchiveNav page={pageNumber} pageCount={pageCount} />
+      <h1 className="mt-12">Archive</h1>
       <ArchiveList comics={comics} />
+      <ArchivePager page={pageNumber} pageCount={pageCount} />
     </article>
   );
 }

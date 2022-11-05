@@ -10,7 +10,7 @@ import MainNavigation from './main-nav';
 function Header() {
   return (
     <header className="flex flex-col">
-      <div className="flex h-25 mt-6">
+      <div className="flex h-25 mt-3">
         <Link href={'/'} title="Sorrowbacon home">
           <Image src={logo} alt="sorrowbacon logo" height={100} width={100} />
         </Link>

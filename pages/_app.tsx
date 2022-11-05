@@ -9,7 +9,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <main className="prose">
+      <main className="prose max-w-none">
         <Component {...pageProps} />
       </main>
     </Layout>

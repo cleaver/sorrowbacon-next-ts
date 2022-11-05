@@ -21,13 +21,23 @@ function TagPage({ tag }: Props) {
   }));
 
   return (
-    <ul>
-      {linkList.map(({ slug, title }) => (
-        <li key={slug}>
-          <Link href={`/comic/${slug}`}>{title}</Link>
-        </li>
-      ))}
-    </ul>
+    <article>
+      <h1 className="mt-12">
+        Comics Tagged &quot;{tag.attributes?.name}&quot;{' '}
+      </h1>
+      <ul>
+        {linkList.map(({ slug, title }) => (
+          <li key={slug}>
+            <Link
+              href={`/comic/${slug}`}
+              className="no-underline active:underline hover:underline text-xl"
+            >
+              {title}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </article>
   );
 }
 

@@ -8,7 +8,7 @@ type Props = {
 
 export default function Layout({ children }: Props) {
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto max-w-[60rem] px-3 mb-12">
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="sorrowbacon - Nihilism and nachos." />

@@ -7,18 +7,29 @@ type Props = {
 
 function PrevNextNav({ prevNext }: Props) {
   return (
-    <nav className="flex">
-      <ul>
-        {prevNext.prev && (
-          <li>
-            <Link href={`/comic/${prevNext.prev}`}>Prev</Link>
-          </li>
-        )}
-        {prevNext.next && (
-          <li>
-            <Link href={`/comic/${prevNext.next}`}>Next</Link>
-          </li>
-        )}
+    <nav className="flex not-prose">
+      <ul className="flex list-none gap-40 m-auto p-0 mt-6">
+        <li className="p-0 w-12">
+          {prevNext.prev && (
+            <Link
+              href={`/comic/${prevNext.prev}`}
+              className="font-bold active:underline hover:underline"
+            >
+              Prev
+            </Link>
+          )}
+        </li>
+
+        <li className="p-0 w-12">
+          {prevNext.next && (
+            <Link
+              href={`/comic/${prevNext.next}`}
+              className="font-bold active:underline hover:underline"
+            >
+              Next
+            </Link>
+          )}
+        </li>
       </ul>
     </nav>
   );

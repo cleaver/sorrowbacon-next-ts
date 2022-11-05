@@ -12,7 +12,7 @@ function ComicList({ images, imageAltText }: Props) {
   }
 
   return (
-    <div>
+    <div className="not-prose ">
       {images.map((image) => (
         <Comic image={image} imageAltText={imageAltText} key={image.id || ''} />
       ))}
