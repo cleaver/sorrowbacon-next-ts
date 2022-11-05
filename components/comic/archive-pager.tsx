@@ -37,7 +37,7 @@ function ArchivePager({ page, pageCount }: Props) {
   const options = [<></>];
   for (let index = 0; index <= pageCount; index++) {
     options.push(
-      <option value={index} selected={page === index} key={index}>
+      <option value={index} key={index}>
         {index}
       </option>
     );
@@ -50,6 +50,7 @@ function ArchivePager({ page, pageCount }: Props) {
         <select
           name="page"
           id="page"
+          value={page}
           ref={pageRef}
           onChange={changePage}
           className="ml-3 px-3 py-1.5 rounded border border-gray-400"

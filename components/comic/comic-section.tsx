@@ -21,7 +21,7 @@ function ComicSection({ comic, prevNext }: Props) {
     <article>
       <PrevNextNav prevNext={prevNext} />
       <ComicList
-        images={comic?.attributes?.image.data}
+        images={imageData}
         imageAltText={comic?.attributes?.image_alt_text || ''}
       />
       <h1>{comic?.attributes?.title}</h1>

@@ -8,7 +8,9 @@ type Props = {
   key: string;
 };
 function Comic({ image, imageAltText, key }: Props) {
-  const url = `${imageServer}${image?.attributes?.url}`;
+  const imageUrl = image?.attributes?.url || '';
+  const filename = imageUrl?.split('/')[2] || '';
+  const url = `/images/${filename}`;
 
   return (
     <Image src={url} alt={imageAltText} width={1000} height={1000} key={key} />

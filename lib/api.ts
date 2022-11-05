@@ -5,17 +5,21 @@
  *
  */
 import { accessCache } from 'next-build-cache';
+import fs from 'fs';
 import {
   apiServer,
   apiKey,
   buildCacheFile,
   archivePageSize,
+  imageServer,
 } from '../lib/config';
 import {
   ComicEntity,
   TagEntity,
   TagEntityResponseCollection,
+  UploadFileEntity,
 } from '../types/types';
+import path from 'path';
 
 const url = apiServer + '/graphql';
 
@@ -137,7 +141,29 @@ export async function getComicBySlug(slug: string) {
   const comicData = await comicResult.json();
   const comicArray = comicData?.data?.comics?.data;
   const comic: ComicEntity = Array.isArray(comicArray) ? comicArray[0] : {};
+  const imageData = comic?.attributes?.image.data;
+  copyImages(imageData);
+
   return comic;
+}
+
+/**
+ *  Copy an image from the image server to the local directory.
+ *  (This way site can be completely static.)
+ * @param imageData array of file entities to copy.
+ */
+async function copyImages(imageData: UploadFileEntity[] | undefined) {
+  if (Array.isArray(imageData)) {
+    imageData.forEach(async (image) => {
+      const downloadPath = image.attributes?.url;
+      const filename = downloadPath?.split('/')[2] || '';
+      const writePath = path.join(process.cwd(), 'public', 'images', filename);
+
+      const response = await fetch(`${imageServer}${downloadPath}`);
+      const arrayBuffer = await response.arrayBuffer();
+      fs.writeFileSync(writePath, Buffer.from(arrayBuffer));
+    });
+  }
 }
 
 /**

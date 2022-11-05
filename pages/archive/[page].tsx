@@ -16,9 +16,6 @@ function ArchivePage({ comics, pageCount }: Props) {
   const page = router.query.page || 1;
   const pageNumber: number = +page;
 
-  console.log('pageNumber', pageNumber);
-  console.log('pageCount', pageCount);
-
   return (
     <article>
       <h1 className="mt-12">Archive</h1>
