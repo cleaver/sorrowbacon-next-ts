@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import logo from '../../public/sb-logo.jpg';
+import wordmark from '../../public/wordmark.png';
 import twIcon from '../../public/sb-tw-icon.png';
 import fbIcon from '../../public/sb-fb-icon.png';
 import igIcon from '../../public/sb-ig-icon.png';
@@ -11,14 +12,20 @@ function Header() {
   return (
     <header className="flex flex-col">
       <div className="flex h-25 mt-3">
-        <Link href={'/'} title="Sorrowbacon home">
-          <Image src={logo} alt="sorrowbacon logo" height={100} width={100} />
+        <Link href={'/'} title="Sorrowbacon home" className="flex-1">
+          <div className="flex flex-1">
+            <Image src={logo} alt="sorrowbacon logo" height={100} width={100} />
+            <div className="flex-1 pt-6 pl-6">
+              <Image
+                src={wordmark}
+                alt="Sorrowbacon wordmark"
+                width={500}
+                height={100}
+                className="h-8 sm:h-10 md:h-16 w-auto"
+              />
+            </div>
+          </div>
         </Link>
-        <div className="flex-1 pt-6 pl-6">
-          <Link href={'/'} title="Sorrowbacon home">
-            <h1 className="text-3xl font-bold">sorrowbacon</h1>
-          </Link>
-        </div>
         <div className="h-25 flex flex-col">
           <div id="socials" className="flex space-x-1">
             <a href="https://twitter.com/sorrowbacon">

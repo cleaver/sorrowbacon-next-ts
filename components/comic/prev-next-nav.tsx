@@ -1,5 +1,8 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { PrevNextElement } from '../../lib/api';
+import prevImg from '../../public/menu/prev-arrow.png';
+import nextImg from '../../public/menu/next-arrow.png';
 
 type Props = {
   prevNext: PrevNextElement;
@@ -15,7 +18,13 @@ function PrevNextNav({ prevNext }: Props) {
               href={`/comic/${prevNext.prev}`}
               className="font-bold active:underline hover:underline"
             >
-              Prev
+              <Image
+                src={prevImg}
+                width={100}
+                height={40}
+                alt="Previous comic"
+                className="h-8 w-auto hover:skew-x-6 hover:-translate-x-1 transition-transform"
+              />
             </Link>
           )}
         </li>
@@ -26,7 +35,13 @@ function PrevNextNav({ prevNext }: Props) {
               href={`/comic/${prevNext.next}`}
               className="font-bold active:underline hover:underline"
             >
-              Next
+              <Image
+                src={nextImg}
+                width={100}
+                height={40}
+                alt="Previous comic"
+                className="h-8 w-auto hover:-skew-x-6 hover:translate-x-1 transition-transform"
+              />
             </Link>
           )}
         </li>
