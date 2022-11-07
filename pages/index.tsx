@@ -21,6 +21,7 @@ export async function getStaticProps() {
       comic: comic,
       prevNext: prevNext,
     },
+    revalidate: 5,
   };
 }
 

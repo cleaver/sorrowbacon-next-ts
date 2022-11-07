@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import ArchiveList from '../../components/comic/archive-list';
 import ArchivePager from '../../components/comic/archive-pager';
 import { getArchivePage, getArchivePageCount } from '../../lib/api';
+import { revalidateInterval } from '../../lib/config';
 import { ComicEntity } from '../../types/types';
 
 type Props = {
@@ -37,6 +38,7 @@ export async function getStaticProps(ctx: GetStaticPropsContext) {
       comics: archiveComics,
       pageCount: pageCount,
     },
+    revalidate: revalidateInterval,
   };
 }
 
@@ -48,7 +50,7 @@ export async function getStaticPaths() {
     paths.push({ params: { page: `${page}` } });
   }
 
-  return { paths: paths, fallback: false };
+  return { paths: paths, fallback: 'blocking' };
 }
 
 export default ArchivePage;

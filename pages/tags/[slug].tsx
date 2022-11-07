@@ -2,6 +2,7 @@ import { GetStaticPathsContext, GetStaticPropsContext } from 'next';
 import Link from 'next/link';
 import { title } from 'process';
 import { getAllTagSlugs, getTagLinksBySlug } from '../../lib/api';
+import { revalidateInterval } from '../../lib/config';
 import { TagEntity } from '../../types/types';
 
 type Props = {
@@ -55,6 +56,7 @@ export async function getStaticProps(ctx: GetStaticPropsContext) {
     props: {
       tag: tag,
     },
+    revalidate: revalidateInterval,
   };
 }
 
@@ -68,7 +70,7 @@ export async function getStaticPaths(ctx: GetStaticPathsContext) {
         },
       };
     }),
-    fallback: false,
+    fallback: 'blocking',
   };
 }
 

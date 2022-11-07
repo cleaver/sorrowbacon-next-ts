@@ -7,6 +7,7 @@ import {
   PrevNextElement,
 } from '../../lib/api';
 import ComicSection from '../../components/comic/comic-section';
+import { revalidateInterval } from '../../lib/config';
 
 type Props = {
   comic: ComicEntity;
@@ -33,6 +34,7 @@ export async function getStaticProps(ctx: GetStaticPropsContext) {
       comic: comic,
       prevNext: prevNext,
     },
+    revalidate: revalidateInterval,
   };
 }
 
@@ -46,7 +48,7 @@ export async function getStaticPaths() {
         },
       };
     }),
-    fallback: false,
+    fallback: 'blocking',
   };
 }
 

@@ -12,6 +12,7 @@ import {
   buildCacheFile,
   archivePageSize,
   imageServer,
+  revalidateInterval,
 } from '../lib/config';
 import {
   ComicEntity,
@@ -236,7 +237,7 @@ export async function getPrevNextForSlug(slug: string) {
   if (!map) {
     map = await getPrevNextMap();
 
-    await cache.put('prev-next-map', map, 30 * 1000);
+    await cache.put('prev-next-map', map, 1000 * revalidateInterval);
   }
 
   const prevNext: PrevNextElement | null = map[slug] || null;
