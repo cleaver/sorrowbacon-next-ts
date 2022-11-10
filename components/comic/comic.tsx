@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { UploadFileEntity } from '../../types/types';
-import { imageServer } from '../../lib/config';
 
 type Props = {
   image: UploadFileEntity;

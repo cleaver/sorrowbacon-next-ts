@@ -11,7 +11,6 @@ import {
   apiKey,
   buildCacheFile,
   archivePageSize,
-  imageServer,
   revalidateInterval,
 } from '../lib/config';
 import {
@@ -143,7 +142,7 @@ export async function getComicBySlug(slug: string) {
   const comicArray = comicData?.data?.comics?.data;
   const comic: ComicEntity = Array.isArray(comicArray) ? comicArray[0] : {};
   const imageData = comic?.attributes?.image.data;
-  copyImages(imageData);
+  // copyImages(imageData);
 
   return comic;
 }

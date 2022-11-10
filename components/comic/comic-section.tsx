@@ -4,6 +4,13 @@ import { PrevNextElement } from '../../lib/api';
 import ComicList from './comic-list';
 import PrevNextNav from './prev-next-nav';
 import TagList from '../tag/tag-list';
+import FacebookIcon from '../sharing/icons/facebook-icon';
+import { webHost } from '../../lib/config';
+import TwitterIcon from '../sharing/icons/twitter-icon';
+import LinkIcon from '../sharing/icons/link-icon';
+import CopyClipboard from '../sharing/copy-clipboard';
+import ShareTwitter from '../sharing/share-twitter';
+import ShareFacebook from '../sharing/share-facebook';
 
 type Props = {
   prevNext: PrevNextElement;
@@ -11,6 +18,8 @@ type Props = {
 };
 
 function ComicSection({ comic, prevNext }: Props) {
+  const shareUrl = encodeURI(webHost + '/comic/' + comic.attributes?.slug);
+
   const imageData = comic?.attributes?.image.data;
 
   if (!Array.isArray(imageData)) {
@@ -26,6 +35,12 @@ function ComicSection({ comic, prevNext }: Props) {
       />
       <h1>{comic?.attributes?.title}</h1>
       <ReactMarkdown>{comic.attributes?.body || ''}</ReactMarkdown>
+      <div className="flex gap-3 mb-6">
+        <div className="font-bold">Share:</div>
+        <ShareFacebook url={shareUrl} />
+        <ShareTwitter url={shareUrl} />
+        <CopyClipboard text={shareUrl} />
+      </div>
       <TagList tags={comic.attributes?.tags} />
     </article>
   );

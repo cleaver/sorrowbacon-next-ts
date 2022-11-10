@@ -1,5 +1,4 @@
 import { ComponentSharedMedia } from '../../types/types';
-import { imageServer } from '../../lib/config';
 import Image from 'next/image';
 
 type Props = {
@@ -8,7 +7,8 @@ type Props = {
 
 function Media({ block }: Props) {
   const fileAttributes = block.file?.data?.attributes;
-  const imageUrl = `${imageServer}${fileAttributes?.url}`;
+  const url = fileAttributes?.url || '';
+  const imageUrl = url.replace(/^\/uploads/, '/images');
   const imageAltText = fileAttributes?.alternativeText || '';
 
   return (
