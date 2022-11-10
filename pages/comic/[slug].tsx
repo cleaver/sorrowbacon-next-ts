@@ -1,5 +1,5 @@
-import { GetStaticPathsContext, GetStaticPropsContext } from 'next';
-import { ComicEntity } from '../../types/types';
+import { GetStaticPropsContext } from 'next';
+import { ComicEntity, SiteEntity } from '../../types/types';
 import {
   getAllSlugs,
   getComicBySlug,
@@ -7,15 +7,35 @@ import {
   PrevNextElement,
 } from '../../lib/api';
 import ComicSection from '../../components/comic/comic-section';
-import { revalidateInterval } from '../../lib/config';
+import { revalidateInterval, webHost } from '../../lib/config';
+import Head from 'next/head';
 
 type Props = {
   comic: ComicEntity;
+  site: SiteEntity;
   prevNext: PrevNextElement;
 };
 
-function ComicPage({ comic, prevNext }: Props) {
-  return <ComicSection comic={comic} prevNext={prevNext} />;
+function ComicPage({ comic, site, prevNext }: Props) {
+  const seoArray = site?.attributes?.seo;
+  const seo = Array.isArray(seoArray) ? seoArray[0] : null;
+  const canonicalUrl = `${webHost}/comic/${comic.attributes?.slug}`;
+  const title = `${comic.attributes?.title} | ${site.attributes?.site_name}`;
+
+  return (
+    <>
+      <Head>
+        <title>{title}</title>
+        <meta name="og:title" content={seo?.metaTitle} />
+        <meta name="description" content={seo?.metaDescription} />
+        <meta name="og:description" content={seo?.metaDescription} />
+        <meta name="og:url" content={canonicalUrl} />
+        <meta name="twitter:url" content={canonicalUrl} />
+      </Head>
+
+      <ComicSection comic={comic} prevNext={prevNext} />
+    </>
+  );
 }
 
 export async function getStaticProps(ctx: GetStaticPropsContext) {
@@ -27,11 +47,12 @@ export async function getStaticProps(ctx: GetStaticPropsContext) {
 
   const slug = Array.isArray(slugParam) ? slugParam[0] : slugParam;
   const prevNext = await getPrevNextForSlug(slug);
-  const comic = await getComicBySlug(slug);
+  const { comic, site } = await getComicBySlug(slug);
 
   return {
     props: {
       comic: comic,
+      site: site,
       prevNext: prevNext,
     },
     revalidate: revalidateInterval,

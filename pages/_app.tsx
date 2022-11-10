@@ -1,13 +1,13 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import Layout, { siteTitle } from '../components/layout/layout';
+import Layout from '../components/layout/layout';
 import Head from 'next/head';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Layout>
       <Head>
-        <title>{siteTitle}</title>
+        <meta name="og:type" content="website" />
       </Head>
       <main className="prose max-w-none">
         <Component {...pageProps} />

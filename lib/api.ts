@@ -15,6 +15,7 @@ import {
 } from '../lib/config';
 import {
   ComicEntity,
+  SiteEntity,
   TagEntity,
   TagEntityResponseCollection,
   UploadFileEntity,
@@ -49,7 +50,7 @@ async function apiCall(query: string, variables = {}) {
  * @returns comic
  */
 export async function getFrontPage() {
-  const comicResult = await apiCall(
+  const result = await apiCall(
     `
       {
         comics(sort: "post_date:desc", pagination: {page:1, pageSize: 1}) {
@@ -81,13 +82,25 @@ export async function getFrontPage() {
             }
           }
         }
+        site {
+          data {
+            attributes {
+              site_name
+              seo {
+                metaTitle
+                metaDescription
+              }
+            }
+          }
+        }
       }
     `
   );
-  const comicData = await comicResult.json();
-  const comicArray = comicData?.data?.comics?.data;
+  const jsonData = await result.json();
+  const comicArray = jsonData?.data?.comics?.data;
   const comic: ComicEntity = Array.isArray(comicArray) ? comicArray[0] : {};
-  return comic;
+  const site: SiteEntity = jsonData.data?.site?.data;
+  return { comic, site };
 }
 
 /**
@@ -97,7 +110,7 @@ export async function getFrontPage() {
  * @returns comic
  */
 export async function getComicBySlug(slug: string) {
-  const comicResult = await apiCall(
+  const result = await apiCall(
     `
       query ComicBySlug($slug: String) {
         comics(
@@ -132,38 +145,29 @@ export async function getComicBySlug(slug: string) {
             }
           }
         }
+        site {
+          data {
+            attributes {
+              site_name
+              seo {
+                metaTitle
+                metaDescription
+              }
+            }
+          }
+        }
       }
     `,
     {
       slug: slug,
     }
   );
-  const comicData = await comicResult.json();
-  const comicArray = comicData?.data?.comics?.data;
+  const jsonData = await result.json();
+  const comicArray = jsonData?.data?.comics?.data;
   const comic: ComicEntity = Array.isArray(comicArray) ? comicArray[0] : {};
-  const imageData = comic?.attributes?.image.data;
-  // copyImages(imageData);
+  const site: SiteEntity = jsonData.data?.site?.data;
 
-  return comic;
-}
-
-/**
- *  Copy an image from the image server to the local directory.
- *  (This way site can be completely static.)
- * @param imageData array of file entities to copy.
- */
-async function copyImages(imageData: UploadFileEntity[] | undefined) {
-  if (Array.isArray(imageData)) {
-    imageData.forEach(async (image) => {
-      const downloadPath = image.attributes?.url;
-      const filename = downloadPath?.split('/')[2] || '';
-      const writePath = path.join(process.cwd(), 'public', 'images', filename);
-
-      const response = await fetch(`${imageServer}${downloadPath}`);
-      const arrayBuffer = await response.arrayBuffer();
-      fs.writeFileSync(writePath, Buffer.from(arrayBuffer));
-    });
-  }
+  return { comic, site };
 }
 
 /**
