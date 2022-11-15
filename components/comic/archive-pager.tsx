@@ -25,6 +25,7 @@ function ArchivePager({ page, pageCount }: Props) {
         Newer
       </Link>
     ) : null;
+
   const olderLink =
     page < pageCount ? (
       <Link
@@ -34,13 +35,10 @@ function ArchivePager({ page, pageCount }: Props) {
         Older
       </Link>
     ) : null;
-  const options = [<></>];
-  for (let index = 0; index <= pageCount; index++) {
-    options.push(
-      <option value={index} key={index}>
-        {index}
-      </option>
-    );
+
+  const options = [];
+  for (let index = 1; index <= pageCount; index++) {
+    options.push(index);
   }
   return (
     <nav className="flex w-full text-lg mt-6">
@@ -55,7 +53,11 @@ function ArchivePager({ page, pageCount }: Props) {
           onChange={changePage}
           className="ml-3 px-3 py-1.5 rounded border border-gray-400"
         >
-          {options}
+          {options.map((page) => (
+            <option value={page} key={page}>
+              {page}
+            </option>
+          ))}
         </select>
       </div>
       <div className="flex-1 text-right">{olderLink}</div>

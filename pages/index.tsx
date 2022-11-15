@@ -35,7 +35,6 @@ export async function getStaticProps() {
   const { comic, site } = await getFrontPage();
   const slug = comic?.attributes?.slug || '';
   const prevNext = await getPrevNextForSlug(slug);
-  console.log('site:', site);
 
   return {
     props: {

@@ -14,9 +14,9 @@ function ArchiveList({ comics }: Props) {
     <section>
       <ul>
         {comics.map((comic) => (
-          <li key={comic?.attributes?.slug}>
+          <li key={comic.attributes?.slug}>
             <Link
-              href={`/comic/${comic?.attributes?.slug}`}
+              href={`/comic/${comic.attributes?.slug}`}
               className="no-underline active:underline hover:underline text-xl"
             >
               {comic?.attributes?.title}
