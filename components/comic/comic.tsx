@@ -12,7 +12,14 @@ function Comic({ image, imageAltText, key }: Props) {
   const url = `/images/${filename}`;
 
   return (
-    <Image src={url} alt={imageAltText} width={1000} height={1000} key={key} />
+    <Image
+      src={url}
+      alt={imageAltText}
+      width={1000}
+      height={1000}
+      key={key}
+      priority={true}
+    />
   );
 }
 

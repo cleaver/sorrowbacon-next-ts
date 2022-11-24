@@ -10,4 +10,4 @@ export const archivePageSize = process.env.ARCHIVE_PAGE_SIZE || 20;
 
 export const revalidateInterval: number = !!process.env.REVALIDATE_INTERVAL
   ? +process.env.REVALIDATE_INTERVAL
-  : 60;
+  : 900;
