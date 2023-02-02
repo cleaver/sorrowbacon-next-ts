@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import DynamicContent from '../components/content/dynamic-content';
 import { getAbout } from '../lib/api';
-import { webHost } from '../lib/config';
+import { revalidateInterval, webHost } from '../lib/config';
 import { AboutEntityResponse } from '../types/types';
 
 type Props = {
@@ -35,6 +35,7 @@ export async function getStaticProps() {
 
   return {
     props: { about },
+    revalidate: revalidateInterval,
   };
 }
 
