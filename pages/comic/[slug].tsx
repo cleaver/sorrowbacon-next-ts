@@ -20,7 +20,7 @@ function ComicPage({ comic, site, prevNext }: Props) {
   const seoArray = site?.attributes?.seo;
   const seo = Array.isArray(seoArray) ? seoArray[0] : null;
   const canonicalUrl = `${webHost}/comic/${comic.attributes?.slug}`;
-  const title = `${comic.attributes?.title} | ${site.attributes?.site_name}`;
+  const title = `${comic.attributes?.title} | ${site?.attributes?.site_name}`;
 
   return (
     <>
