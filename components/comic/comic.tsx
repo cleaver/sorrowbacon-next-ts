@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { apiServer } from '../../lib/config';
 import { UploadFileEntity } from '../../types/types';
 
 type Props = {
@@ -8,8 +9,7 @@ type Props = {
 };
 function Comic({ image, imageAltText, key }: Props) {
   const imageUrl = image?.attributes?.url || '';
-  const filename = imageUrl?.split('/')[2] || '';
-  const url = `/images/${filename}`;
+  const url = `${apiServer}${imageUrl}`;
 
   return (
     <Image
