@@ -1,4 +1,4 @@
-export const apiServer = process.env.API_SERVER || 'http://localhost:1337';
+export const apiServer = process.env.API_SERVER || 'http://strapi:1337';
 
 export const apiKey = process.env.API_KEY;
 
