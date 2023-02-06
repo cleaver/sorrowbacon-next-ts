@@ -36,3 +36,6 @@ yarn-error.log*
 
 #build cache
 /build.cache
+
+#build env file
+/build.env
