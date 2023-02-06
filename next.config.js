@@ -14,6 +14,10 @@ const nextConfig = {
         protocol: 'http',
         hostname: 'strapi',
       },
+      {
+        protocol: 'https',
+        hostname: 'sb.pimpsmooth.com',
+      },
     ],
   },
   async redirects() {
