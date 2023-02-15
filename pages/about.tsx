@@ -23,7 +23,7 @@ function AboutPage({ about }: Props) {
         <meta name="og:url" content={webHost + '/about'} />
       </Head>
       <article>
-        <h1>{title}</h1>
+        <h1 className="mt-12">{title}</h1>
         <DynamicContent blocks={blocks} />
       </article>
     </>
