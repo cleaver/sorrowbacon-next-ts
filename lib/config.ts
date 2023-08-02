@@ -11,3 +11,5 @@ export const archivePageSize = process.env.ARCHIVE_PAGE_SIZE || 20;
 export const revalidateInterval: number = !!process.env.REVALIDATE_INTERVAL
   ? +process.env.REVALIDATE_INTERVAL
   : 60;
+
+export const mailchimpUrl = process.env.NEXT_PUBLIC_MAILCHIMP_URL || '';
