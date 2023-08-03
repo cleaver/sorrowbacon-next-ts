@@ -13,6 +13,9 @@ help:
 	@echo '  $$ make logs'
 	@echo '  Follow the container logs.'
 	@echo '  '
+	@echo '  $$ make tag version=...'
+	@echo '  Tag "latest" image with new version.'
+	@echo '  '
 	@echo '  $$ make push [version=...]'
 	@echo '  Push the production image.'
 	@echo '  '
@@ -29,6 +32,9 @@ prod:
 
 logs:
 	docker logs -f nextjs
+
+tag:
+	docker image tag ghcr.io/cleaver/sorrowbacon-next-ts:latest ghcr.io/cleaver/sorrowbacon-next-ts:$(version)
 
 push:
 	docker push ghcr.io/cleaver/sorrowbacon-next-ts:$(version)
