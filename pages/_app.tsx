@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         strategy="lazyOnload"
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
       />
-      <Script strategy="afterInteractive">
+      <Script id="ga4_script" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
