@@ -13,3 +13,5 @@ export const revalidateInterval: number = !!process.env.REVALIDATE_INTERVAL
   : 60;
 
 export const mailchimpUrl = process.env.NEXT_PUBLIC_MAILCHIMP_URL || '';
+
+export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
