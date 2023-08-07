@@ -17,14 +17,14 @@ function TagPage({ tag }: Props) {
   }
 
   const linkList = comicList.map((comic) => ({
-    slug: comic.attributes?.slug,
-    title: comic.attributes?.title,
+    slug: comic?.attributes?.slug,
+    title: comic?.attributes?.title,
   }));
 
   return (
     <article>
       <h1 className="mt-12">
-        Comics Tagged &quot;{tag.attributes?.name}&quot;{' '}
+        Comics Tagged &quot;{tag?.attributes?.name}&quot;{' '}
       </h1>
       <ul>
         {linkList.map(({ slug, title }) => (

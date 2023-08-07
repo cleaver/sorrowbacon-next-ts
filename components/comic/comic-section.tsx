@@ -18,7 +18,7 @@ type Props = {
 };
 
 function ComicSection({ comic, prevNext }: Props) {
-  const shareUrl = encodeURI(webHost + '/comic/' + comic.attributes?.slug);
+  const shareUrl = encodeURI(webHost + '/comic/' + comic?.attributes?.slug);
 
   const imageData = comic?.attributes?.image.data;
 
@@ -34,14 +34,14 @@ function ComicSection({ comic, prevNext }: Props) {
         imageAltText={comic?.attributes?.image_alt_text || ''}
       />
       <h1>{comic?.attributes?.title}</h1>
-      <ReactMarkdown>{comic.attributes?.body || ''}</ReactMarkdown>
+      <ReactMarkdown>{comic?.attributes?.body || ''}</ReactMarkdown>
       <div className="flex gap-3 mb-6">
         <div className="font-bold">Share:</div>
         <ShareFacebook url={shareUrl} />
         <ShareTwitter url={shareUrl} />
         <CopyClipboard text={shareUrl} />
       </div>
-      <TagList tags={comic.attributes?.tags} />
+      <TagList tags={comic?.attributes?.tags} />
     </article>
   );
 }

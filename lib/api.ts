@@ -317,8 +317,8 @@ export async function getAllTagSlugs() {
 
   const slugsArray = tagArray.reduce(
     (notUndefined: string[], maybeUndefinedTag) => {
-      if (!!maybeUndefinedTag.attributes?.slug) {
-        notUndefined.push(maybeUndefinedTag.attributes?.slug);
+      if (!!maybeUndefinedTag?.attributes?.slug) {
+        notUndefined.push(maybeUndefinedTag?.attributes?.slug);
       }
       return notUndefined;
     },
