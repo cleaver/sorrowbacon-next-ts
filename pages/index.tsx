@@ -14,7 +14,7 @@ type Props = {
 function HomePage({ comic, site, prevNext }: Props) {
   const seoArray = site?.attributes?.seo;
   const seo = Array.isArray(seoArray) ? seoArray[0] : null;
-  const canonicalUrl = `${webHost}/comic/${comic.attributes?.slug}`;
+  const canonicalUrl = `${webHost}/comic/${comic?.attributes?.slug}`;
 
   return (
     <>

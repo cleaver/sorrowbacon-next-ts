@@ -1,4 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document';
+import { GA_TRACKING_ID } from '../lib/config';
 
 const Document = () => {
   return (

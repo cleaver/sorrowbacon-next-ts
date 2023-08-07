@@ -18,7 +18,7 @@ function ContactPage() {
       <article className="flex flex-col">
         <h1 className="mt-12">Get Updates!</h1>
         <div>
-          We'll send you an update whenever a new sorrowbacon comic comes
+          We&apos;ll send you an update whenever a new sorrowbacon comic comes
           out....
         </div>
         <div className="flex justify-center py-4">
@@ -26,7 +26,7 @@ function ContactPage() {
             <MailchimpForm />
           </div>
         </div>
-        <div>We won't sell your email address ever!</div>
+        <div>We won&apos;t sell your email address ever!</div>
       </article>
     </>
   );

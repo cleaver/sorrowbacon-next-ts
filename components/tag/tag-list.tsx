@@ -15,8 +15,8 @@ function TagList({ tags }: Props) {
       <div className="flex-grow">
         <ul className="list-none m-0">
           {tags.data.map((tag) => {
-            const slug = tag.attributes?.slug;
-            const name = tag.attributes?.name;
+            const slug = tag?.attributes?.slug;
+            const name = tag?.attributes?.name;
 
             return (
               <li className="mt-0 mb-3" key={slug}>
