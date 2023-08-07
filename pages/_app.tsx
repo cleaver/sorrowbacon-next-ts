@@ -5,7 +5,7 @@ import Script from 'next/script';
 import { useEffect } from 'react';
 import Layout from '../components/layout/layout';
 import * as gtag from '../lib/analytics';
-import { GA_TRACKING_ID } from '../lib/config';
+const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
 import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }: AppProps) {

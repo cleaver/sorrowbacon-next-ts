@@ -28,7 +28,16 @@ dev:
 
 prod:
 	source ./build.env; \
-	docker build --no-cache --build-arg API_SERVER --build-arg API_KEY --network=host -f Dockerfile.production -t ghcr.io/cleaver/sorrowbacon-next-ts .
+	docker build \
+	--no-cache \
+	--build-arg API_SERVER \
+	--build-arg API_KEY \
+	--build-arg NEXT_PUBLIC_MAILCHIMP_URL \
+	--build-arg NEXT_PUBLIC_GA_MEASUREMENT_ID \
+	--network=host \
+	-f Dockerfile.production \
+	-t ghcr.io/cleaver/sorrowbacon-next-ts \
+	.
 
 logs:
 	docker logs -f nextjs
