@@ -3,10 +3,11 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { useEffect } from 'react';
+import PokeUp from '../components/alert/poke-up';
 import Layout from '../components/layout/layout';
 import * as gtag from '../lib/analytics';
-const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
 import '../styles/globals.css';
+const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -45,6 +46,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <main className="prose max-w-none">
         <Component {...pageProps} />
       </main>
+      <PokeUp>Oh hi!</PokeUp>
     </Layout>
   );
 }
