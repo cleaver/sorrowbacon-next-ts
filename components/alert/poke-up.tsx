@@ -12,6 +12,7 @@ type Props = {
 function PokeUp({ children }: Props) {
   const size = useWindowPosition();
   const [displayPokeUp, setDisplayPokeUp] = useState(false);
+  const [wrapperMouseOver, setWrapperMouseOver] = useState(false);
 
   function showPokeUp(msTime: number) {
     msTime = increaseWaitTime(msTime);
@@ -30,31 +31,53 @@ function PokeUp({ children }: Props) {
     const timer = setTimeout(() => {
       showPokeUp(INITIAL_WAIT_TIME);
     }, INITIAL_WAIT_TIME);
-    console.log('useEffect');
     return () => clearTimeout(timer);
   }, []);
 
   const pokeRef = useRef<HTMLDivElement | null>(null);
-  // const screenBottom = size.height + size.scrollY;
   const screenBottom = size.height;
   let pokeTop = screenBottom;
-  if (displayPokeUp) {
+  if (displayPokeUp || wrapperMouseOver) {
     pokeTop = screenBottom - pokeRef.current?.offsetHeight! + 16;
+  }
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const wrapperHeight = pokeRef.current?.offsetHeight! - 16;
+  const wrapperTop = screenBottom - wrapperHeight;
+  const wrapperWidth = pokeRef.current?.offsetWidth;
+
+  function handleWrapperMouseOver() {
+    setWrapperMouseOver(true);
+  }
+  function handleWrapperMouseOut() {
+    setWrapperMouseOver(false);
   }
 
   return (
     <div
-      className="fixed border-t-2 border-l-2 border-r-2 border-gray-600 rounded-t bg-white pt-4 pb-8 px-6"
+      className="fixed bg-transparent"
       style={{
-        top: pokeTop,
+        top: wrapperTop,
         right: 40,
-        transitionProperty: 'top',
-        transitionDuration: '420ms',
-        transitionTimingFunction: 'cubic-bezier(.68,-0.55,.27,1.55)',
+        width: wrapperWidth,
+        height: wrapperHeight,
       }}
-      ref={pokeRef}
+      ref={wrapperRef}
+      onMouseOver={handleWrapperMouseOver}
+      onMouseOut={handleWrapperMouseOut}
     >
-      {children}
+      <div
+        className="fixed border-t-2 border-l-2 border-r-2 border-gray-600 rounded-t bg-white pt-4 pb-8 px-6"
+        style={{
+          top: pokeTop,
+          right: 40,
+          transitionProperty: 'top',
+          transitionDuration: '420ms',
+          transitionTimingFunction: 'cubic-bezier(.68,-0.55,.27,1.55)',
+        }}
+        ref={pokeRef}
+      >
+        {children}
+      </div>
     </div>
   );
 }
