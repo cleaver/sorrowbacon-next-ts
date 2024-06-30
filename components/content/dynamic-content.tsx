@@ -1,7 +1,8 @@
+import { ReactNode } from 'react';
 import { AboutBlocksDynamicZone, Maybe } from '../../types/types';
-import ComponentSharedRichText from './rich-text';
 import ComponentSharedMedia from './media';
 import ComponentSharedQuote from './quote';
+import ComponentSharedRichText from './rich-text';
 
 type Props = {
   blocks: Array<Maybe<AboutBlocksDynamicZone>>;
@@ -12,7 +13,7 @@ function DynamicContent({ blocks }: Props) {
     return null;
   }
 
-  let dynamicBlocks = [<></>];
+  let dynamicBlocks: ReactNode[] = [];
   blocks.map((block, index) => {
     switch (block?.__typename) {
       case 'ComponentSharedRichText':
@@ -33,6 +34,9 @@ function DynamicContent({ blocks }: Props) {
         break;
     }
   });
+  if (dynamicBlocks.length === 0) {
+    dynamicBlocks = [<></>]
+  }
 
   return <div>{dynamicBlocks}</div>;
 }

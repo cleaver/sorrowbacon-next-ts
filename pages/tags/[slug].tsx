@@ -1,6 +1,5 @@
 import { GetStaticPathsContext, GetStaticPropsContext } from 'next';
 import Link from 'next/link';
-import { title } from 'process';
 import { getAllTagSlugs, getTagLinksBySlug } from '../../lib/api';
 import { revalidateInterval } from '../../lib/config';
 import { TagEntity } from '../../types/types';
@@ -60,7 +59,7 @@ export async function getStaticProps(ctx: GetStaticPropsContext) {
   };
 }
 
-export async function getStaticPaths(ctx: GetStaticPathsContext) {
+export async function getStaticPaths(_ctx: GetStaticPathsContext) {
   const slugs = await getAllTagSlugs();
   return {
     paths: slugs.map((slug) => {

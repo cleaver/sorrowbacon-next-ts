@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import ArchiveList from '../../components/comic/archive-list';
 import ArchivePager from '../../components/comic/archive-pager';
 import { getArchivePage, getArchivePageCount } from '../../lib/api';
-import { revalidateInterval, webHost } from '../../lib/config';
+import { revalidateInterval } from '../../lib/config';
 import { ComicEntity } from '../../types/types';
 
 type Props = {

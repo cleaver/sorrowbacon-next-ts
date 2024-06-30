@@ -1,9 +1,8 @@
-import { ComicEntity, SiteEntity } from '../types/types';
-import { getFrontPage, getPrevNextForSlug, PrevNextElement } from '../lib/api';
-import ComicSection from '../components/comic/comic-section';
-import { revalidateInterval, webHost } from '../lib/config';
 import Head from 'next/head';
-import { siteTitle } from '../components/layout/layout';
+import ComicSection from '../components/comic/comic-section';
+import { getFrontPage, getPrevNextForSlug, PrevNextElement } from '../lib/api';
+import { revalidateInterval, webHost } from '../lib/config';
+import { ComicEntity, SiteEntity } from '../types/types';
 
 type Props = {
   comic: ComicEntity;

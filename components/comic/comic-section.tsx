@@ -1,16 +1,13 @@
 import ReactMarkdown from 'react-markdown';
-import { ComicEntity } from '../../types/types';
 import { PrevNextElement } from '../../lib/api';
+import { webHost } from '../../lib/config';
+import { ComicEntity } from '../../types/types';
+import CopyClipboard from '../sharing/copy-clipboard';
+import ShareFacebook from '../sharing/share-facebook';
+import ShareTwitter from '../sharing/share-twitter';
+import TagList from '../tag/tag-list';
 import ComicList from './comic-list';
 import PrevNextNav from './prev-next-nav';
-import TagList from '../tag/tag-list';
-import FacebookIcon from '../sharing/icons/facebook-icon';
-import { webHost } from '../../lib/config';
-import TwitterIcon from '../sharing/icons/twitter-icon';
-import LinkIcon from '../sharing/icons/link-icon';
-import CopyClipboard from '../sharing/copy-clipboard';
-import ShareTwitter from '../sharing/share-twitter';
-import ShareFacebook from '../sharing/share-facebook';
 
 type Props = {
   prevNext: PrevNextElement;

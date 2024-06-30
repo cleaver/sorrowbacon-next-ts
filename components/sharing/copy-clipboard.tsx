@@ -26,7 +26,7 @@ function CopyClipboard({ text }: Props) {
     linkRef.current?.select();
   };
 
-  const copyClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const copyClickHandler = (_event: React.MouseEvent<HTMLButtonElement>) => {
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => {
