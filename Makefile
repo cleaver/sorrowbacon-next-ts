@@ -24,7 +24,7 @@ help:
 	@docker ps
 
 dev:
-	docker build -t ghcr.io/cleaver/sorrowbacon-next-ts .
+	docker build -t ghcr.io/cleaver/sorrowbacon-next-ts . 2>&1 | tee build.log
 
 prod:
 	source ./build.env; \
@@ -37,7 +37,8 @@ prod:
 	--network=host \
 	-f Dockerfile.production \
 	-t ghcr.io/cleaver/sorrowbacon-next-ts \
-	.
+	. \
+	2>&1 | tee build.log
 
 logs:
 	docker logs -f nextjs

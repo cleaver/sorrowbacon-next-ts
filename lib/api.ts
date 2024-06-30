@@ -5,22 +5,15 @@
  *
  */
 import { accessCache } from 'next-build-cache';
-import fs from 'fs';
 import {
-  apiServer,
-  apiKey,
-  buildCacheFile,
-  archivePageSize,
-  revalidateInterval,
+  apiKey, apiServer, archivePageSize, buildCacheFile, revalidateInterval
 } from '../lib/config';
 import {
   ComicEntity,
   SiteEntity,
   TagEntity,
-  TagEntityResponseCollection,
-  UploadFileEntity,
+  TagEntityResponseCollection
 } from '../types/types';
-import path from 'path';
 
 const url = apiServer + '/graphql';
 

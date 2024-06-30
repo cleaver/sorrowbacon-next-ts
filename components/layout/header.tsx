@@ -4,9 +4,9 @@ import Link from 'next/link';
 import fbIcon from '../../public/sb-fb-icon.png';
 import igIcon from '../../public/sb-ig-icon.png';
 import logo from '../../public/sb-logo.jpg';
-import newsletterImage from '../../public/social-icon-subscribe.gif';
 import ptIcon from '../../public/sb-pt-icon.png';
 import twIcon from '../../public/sb-tw-icon.png';
+import newsletterImage from '../../public/social-icon-subscribe.gif';
 import wordmark from '../../public/wordmark.png';
 import MainNavigation from './main-nav';
 

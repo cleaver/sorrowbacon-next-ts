@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ComicEntity, Maybe } from '../../types/types';
+import { ComicEntity } from '../../types/types';
 
 type Props = {
   comics: Array<ComicEntity>;

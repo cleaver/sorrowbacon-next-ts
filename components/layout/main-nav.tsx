@@ -1,9 +1,9 @@
-import Link from 'next/link';
 import Image from 'next/image';
-import homeImg from '../../public/menu/home.png';
-import archiveImg from '../../public/menu/archive.png';
+import Link from 'next/link';
 import aboutImg from '../../public/menu/about.png';
+import archiveImg from '../../public/menu/archive.png';
 import contactImg from '../../public/menu/contact.png';
+import homeImg from '../../public/menu/home.png';
 
 function MainNavigation() {
   return (
