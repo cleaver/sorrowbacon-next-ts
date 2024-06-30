@@ -18,8 +18,7 @@ function ContactPage() {
       <article className="flex flex-col">
         <h1 className="mt-12">Get Updates!</h1>
         <div>
-          We&apos;ll send you an update whenever a new sorrowbacon comic comes
-          out....
+          Get updates about new comics and ideas in an occasional newsletter.
         </div>
         <div className="flex justify-center py-4">
           <div className="w-full md:w-4/5">
