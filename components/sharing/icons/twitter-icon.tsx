@@ -1,10 +1,10 @@
 function TwitterIcon() {
   const svgStyle = {
-    fill: '#606060',
-    strokeMiterlimit: '10',
-    strokeWidth: '8px',
-    height: '24px',
-    width: '24px',
+    fill: "#606060",
+    strokeMiterlimit: "10",
+    strokeWidth: "8px",
+    height: "24px",
+    width: "24px",
   };
 
   return (

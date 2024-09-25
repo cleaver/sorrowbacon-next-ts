@@ -1,6 +1,6 @@
-import Image from 'next/image';
-import { apiServer } from '../../lib/config';
-import { ComponentSharedMedia } from '../../types/types';
+import Image from "next/image";
+import { apiServer } from "../../lib/config";
+import { ComponentSharedMedia } from "../../types/types";
 
 type Props = {
   block: ComponentSharedMedia;
@@ -8,9 +8,9 @@ type Props = {
 
 function Media({ block }: Props) {
   const fileAttributes = block.file?.data?.attributes;
-  const imageUrl = fileAttributes?.url || '';
+  const imageUrl = fileAttributes?.url || "";
   const url = `${apiServer}${imageUrl}`;
-  const imageAltText = fileAttributes?.alternativeText || '';
+  const imageAltText = fileAttributes?.alternativeText || "";
 
   return (
     <section className="my-4">

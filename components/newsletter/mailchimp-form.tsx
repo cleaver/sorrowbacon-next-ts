@@ -1,13 +1,13 @@
-import { FormEvent, useState } from 'react';
-import MailchimpSubscribe from 'react-mailchimp-subscribe';
-import { mailchimpUrl } from '../../lib/config';
+import { FormEvent, useState } from "react";
+import MailchimpSubscribe from "react-mailchimp-subscribe";
+import { mailchimpUrl } from "../../lib/config";
 
 type FormFields = { EMAIL: string; FNAME: string };
 
 function MailchimpForm() {
   const [formKey, setFormKey] = useState(1);
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
 
   return (
     <div className="flex flex-col">
@@ -60,23 +60,23 @@ function MailchimpForm() {
           );
 
           switch (status) {
-            case 'sending':
+            case "sending":
               return (
                 <div className="p-4 text-lg border-t border-b border-gray-400 text-blue-900">
                   sending...
                 </div>
               );
               break;
-            case 'error':
+            case "error":
               return (
                 <div className="p-4 border-t border-b border-gray-400 ">
                   <div
                     className="text-lg text-red-800"
                     dangerouslySetInnerHTML={{
                       __html:
-                        typeof message === 'string'
+                        typeof message === "string"
                           ? message
-                          : 'An error occurred!',
+                          : "An error occurred!",
                     }}
                   />
                   <button
@@ -89,7 +89,7 @@ function MailchimpForm() {
                   </button>
                 </div>
               );
-            case 'success':
+            case "success":
               return (
                 <div
                   className="text-lg p-4 border-t border-b border-gray-400 text-green-800"

@@ -17,7 +17,7 @@ type Props = {
 };
 
 function ComicPage({ comic, site, prevNext }: Props) {
-  const canonicalUrl = `${webHost}/comic/${comic?.attributes?.slug}`;
+  const canonicalUrl = `${webHost}/comic/${comic.slug}`;
 
   return (
     <>

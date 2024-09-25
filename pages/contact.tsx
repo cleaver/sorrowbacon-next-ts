@@ -1,5 +1,5 @@
-import Head from 'next/head';
-import { webHost } from '../lib/config';
+import Head from "next/head";
+import { webHost } from "../lib/config";
 
 function ContactPage() {
   return (
@@ -9,7 +9,7 @@ function ContactPage() {
         <meta name="og:title" content="Contact | sorrowbacon" />
         <meta name="description" content="Contact the sorrowbacon comic." />
         <meta name="og:description" content="Contact the sorrowbacon comic." />
-        <meta name="og:url" content={webHost + '/contact'} />
+        <meta name="og:url" content={webHost + "/contact"} />
       </Head>
       <article>
         <h1 className="mt-12">Contact</h1>

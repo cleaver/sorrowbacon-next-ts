@@ -1,20 +1,20 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 
-import fbIcon from '../../public/sb-fb-icon.png';
-import igIcon from '../../public/sb-ig-icon.png';
-import logo from '../../public/sb-logo.jpg';
-import ptIcon from '../../public/sb-pt-icon.png';
-import twIcon from '../../public/sb-tw-icon.png';
-import newsletterImage from '../../public/social-icon-subscribe.gif';
-import wordmark from '../../public/wordmark.png';
-import MainNavigation from './main-nav';
+import fbIcon from "../../public/sb-fb-icon.png";
+import igIcon from "../../public/sb-ig-icon.png";
+import logo from "../../public/sb-logo.jpg";
+import ptIcon from "../../public/sb-pt-icon.png";
+import twIcon from "../../public/sb-tw-icon.png";
+import newsletterImage from "../../public/social-icon-subscribe.gif";
+import wordmark from "../../public/wordmark.png";
+import MainNavigation from "./main-nav";
 
 function Header() {
   return (
     <header className="flex flex-col">
       <div className="flex h-25 mt-3">
-        <Link href={'/'} title="Sorrowbacon home" className="flex-1">
+        <Link href={"/"} title="Sorrowbacon home" className="flex-1">
           <div className="flex flex-1">
             <Image src={logo} alt="sorrowbacon logo" height={100} width={100} />
             <div className="flex-1 pt-6 pl-6">
@@ -57,7 +57,7 @@ function Header() {
             </a>
           </div>
           <div id="subscribe" className="mt-2 mx-auto">
-            <Link href={'/newsletter'} title="sorrowbacon email updates">
+            <Link href={"/newsletter"} title="sorrowbacon email updates">
               <Image
                 alt="Subscribe"
                 src={newsletterImage}

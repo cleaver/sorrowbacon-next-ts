@@ -1,6 +1,6 @@
-import Header from './header';
+import Header from "./header";
 
-export const siteTitle = 'sorrowbacon | a comic';
+export const siteTitle = "sorrowbacon | a comic";
 type Props = {
   children: React.ReactNode;
 };

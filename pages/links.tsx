@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 function LinksPage() {
   return (
@@ -7,16 +7,16 @@ function LinksPage() {
       <p>
         <ul>
           <li>
-            <Link href={'https://www.patreon.com/sorrowbacon'}>Patreon</Link>
+            <Link href={"https://www.patreon.com/sorrowbacon"}>Patreon</Link>
           </li>
           <li>
-            <Link href={'https://www.facebook.com/sorrowbacon'}>Facebook</Link>
+            <Link href={"https://www.facebook.com/sorrowbacon"}>Facebook</Link>
           </li>
           <li>
-            <Link href={'https://twitter.com/sorrowbacon'}>Twitter</Link>
+            <Link href={"https://twitter.com/sorrowbacon"}>Twitter</Link>
           </li>
           <li>
-            <Link href={'https://www.instagram.com/sorrowbacon/'}>
+            <Link href={"https://www.instagram.com/sorrowbacon/"}>
               Instagram
             </Link>
           </li>

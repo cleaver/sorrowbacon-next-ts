@@ -24,10 +24,12 @@
     "@types/react-dom": "^18.3.0",
     "@types/react-mailchimp-subscribe": "^2.1.1",
     "autoprefixer": "^10.4.19",
-    "eslint": "^9.6.0",
+    "eslint": "^8.57.1",
     "eslint-config-next": "^14.2.4",
+    "eslint-config-prettier": "^9.1.0",
     "next-build-cache": "^1.0.4",
     "postcss": "^8.4.39",
+    "prettier": "^3.3.3",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.5.2"
   }

@@ -1,5 +1,5 @@
-import ReactMarkdown from 'react-markdown';
-import { ComponentSharedRichText } from '../../types/types';
+import ReactMarkdown from "react-markdown";
+import { ComponentSharedRichText } from "../../types/types";
 
 type Props = {
   block: ComponentSharedRichText;
@@ -8,7 +8,7 @@ type Props = {
 function RichText({ block }: Props) {
   return (
     <section className="my-4">
-      <ReactMarkdown>{block.body || ''}</ReactMarkdown>
+      <ReactMarkdown>{block.body || ""}</ReactMarkdown>
     </section>
   );
 }

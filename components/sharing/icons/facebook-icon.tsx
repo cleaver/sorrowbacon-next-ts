@@ -1,11 +1,11 @@
 function FacebookIcon() {
   const svgStyle = {
-    fill: 'none',
-    stroke: '#606060',
-    strokeMiterlimit: '10',
-    strokeWidth: '8px',
-    height: '24px',
-    width: '24px',
+    fill: "none",
+    stroke: "#606060",
+    strokeMiterlimit: "10",
+    strokeWidth: "8px",
+    height: "24px",
+    width: "24px",
   };
 
   return (

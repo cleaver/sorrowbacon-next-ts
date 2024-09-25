@@ -1,8 +1,8 @@
-import Head from 'next/head';
-import ComicSection from '../components/comic/comic-section';
-import { getFrontPage, getPrevNextForSlug, PrevNextElement } from '../lib/api';
-import { revalidateInterval, webHost } from '../lib/config';
-import { ComicEntity, SiteEntity } from '../types/types';
+import Head from "next/head";
+import ComicSection from "../components/comic/comic-section";
+import { getFrontPage, getPrevNextForSlug, PrevNextElement } from "../lib/api";
+import { revalidateInterval, webHost } from "../lib/config";
+import { ComicEntity, SiteEntity } from "../types/types";
 
 type Props = {
   comic: ComicEntity;
@@ -32,7 +32,7 @@ function HomePage({ comic, site, prevNext }: Props) {
 
 export async function getStaticProps() {
   const { comic, site } = await getFrontPage();
-  const slug = comic?.attributes?.slug || '';
+  const slug = comic?.attributes?.slug || "";
   const prevNext = await getPrevNextForSlug(slug);
 
   return {

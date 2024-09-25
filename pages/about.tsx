@@ -1,8 +1,8 @@
-import Head from 'next/head';
-import DynamicContent from '../components/content/dynamic-content';
-import { getAbout } from '../lib/api';
-import { revalidateInterval, webHost } from '../lib/config';
-import { AboutEntityResponse } from '../types/types';
+import Head from "next/head";
+import DynamicContent from "../components/content/dynamic-content";
+import { getAbout } from "../lib/api";
+import { revalidateInterval, webHost } from "../lib/config";
+import { AboutEntityResponse } from "../types/types";
 
 type Props = {
   about: AboutEntityResponse;
@@ -20,7 +20,7 @@ function AboutPage({ about }: Props) {
         <meta name="og:title" content="About | sorrowbacon" />
         <meta name="description" content="About the sorrowbacon comic." />
         <meta name="og:description" content="About the sorrowbacon comic." />
-        <meta name="og:url" content={webHost + '/about'} />
+        <meta name="og:url" content={webHost + "/about"} />
       </Head>
       <article>
         <h1 className="mt-12">{title}</h1>
