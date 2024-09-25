@@ -1,8 +1,9 @@
-import Link from 'next/link';
-import { ComicEntity } from '../../types/types';
+import Link from "next/link";
+import { ComicEntity } from "../../types/types";
+import { JjComicCollection } from "../../types/jj_types";
 
 type Props = {
-  comics: Array<ComicEntity>;
+  comics: JjComicCollection;
 };
 
 function ArchiveList({ comics }: Props) {
@@ -14,12 +15,12 @@ function ArchiveList({ comics }: Props) {
     <section>
       <ul>
         {comics.map((comic) => (
-          <li key={comic?.attributes?.slug}>
+          <li key={comic.slug}>
             <Link
-              href={`/comic/${comic?.attributes?.slug}`}
+              href={`/comic/${comic.slug}`}
               className="no-underline active:underline hover:underline text-xl"
             >
-              {comic?.attributes?.title}
+              {comic.title}
             </Link>
           </li>
         ))}

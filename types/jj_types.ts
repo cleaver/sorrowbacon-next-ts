@@ -19,6 +19,8 @@ export type JjImage = {
   url: string;
 };
 
+export type MaybeImage = JjImage | {} | "not loaded";
+
 export type JjImageEntity = IdentifiedEntity & JjImage;
 
 export type JjImageCollection = JjImageEntity[];
@@ -59,7 +61,7 @@ export type JjComic = {
   slug: string;
   meta_description: string;
   image_alt_text: string;
-  media: JjImage | "not loaded";
+  media: JjImageEntity | {} | "not loaded";
   media_id: number;
   tags: JjTagCollection | "not loaded";
   published: boolean;

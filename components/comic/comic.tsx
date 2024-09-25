@@ -1,14 +1,15 @@
-import Image from 'next/image';
-import { apiServer } from '../../lib/config';
-import { UploadFileEntity } from '../../types/types';
+import Image from "next/image";
+import { apiServer } from "../../lib/config";
+import { JjImageEntity } from "../../types/jj_types";
 
 type Props = {
-  image: UploadFileEntity;
+  image: JjImageEntity;
   imageAltText: string;
   key: string;
 };
+
 function Comic({ image, imageAltText, key }: Props) {
-  const imageUrl = image?.attributes?.url || '';
+  const imageUrl = image.url || "";
   const url = `${apiServer}${imageUrl}`;
 
   return (

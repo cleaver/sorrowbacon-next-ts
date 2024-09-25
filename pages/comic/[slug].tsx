@@ -1,34 +1,31 @@
-import { GetStaticPropsContext } from 'next';
-import Head from 'next/head';
-import ComicSection from '../../components/comic/comic-section';
+import { GetStaticPropsContext } from "next";
+import Head from "next/head";
+import ComicSection from "../../components/comic/comic-section";
 import {
   getAllSlugs,
   getComicBySlug,
   getPrevNextForSlug,
-  PrevNextElement
-} from '../../lib/api';
-import { revalidateInterval, webHost } from '../../lib/config';
-import { ComicEntity, SiteEntity } from '../../types/types';
+  PrevNextElement,
+} from "../../lib/api";
+import { revalidateInterval, webHost } from "../../lib/config";
+import { JjComicEntity, SiteSettings } from "../../types/jj_types";
 
 type Props = {
-  comic: ComicEntity;
-  site: SiteEntity;
+  comic: JjComicEntity;
+  site: SiteSettings;
   prevNext: PrevNextElement;
 };
 
 function ComicPage({ comic, site, prevNext }: Props) {
-  const seoArray = site?.attributes?.seo;
-  const seo = Array.isArray(seoArray) ? seoArray[0] : null;
   const canonicalUrl = `${webHost}/comic/${comic?.attributes?.slug}`;
-  const title = `${comic?.attributes?.title} | ${site?.attributes?.site_name}`;
 
   return (
     <>
       <Head>
-        <title>{title}</title>
-        <meta name="og:title" content={seo?.metaTitle} />
-        <meta name="description" content={seo?.metaDescription} />
-        <meta name="og:description" content={seo?.metaDescription} />
+        <title>{site.site_title}</title>
+        <meta name="og:title" content={site.meta_title} />
+        <meta name="description" content={site.meta_description} />
+        <meta name="og:description" content={site.meta_description} />
         <meta name="og:url" content={canonicalUrl} />
         <meta name="twitter:url" content={canonicalUrl} />
       </Head>
@@ -69,7 +66,7 @@ export async function getStaticPaths() {
         },
       };
     }),
-    fallback: 'blocking',
+    fallback: "blocking",
   };
 }
 
