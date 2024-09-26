@@ -2,10 +2,10 @@ import { GetStaticPathsContext, GetStaticPropsContext } from "next";
 import Link from "next/link";
 import { getAllTagSlugs, getTagLinksBySlug } from "../../lib/api";
 import { revalidateInterval } from "../../lib/config";
-import { JjTagEntity } from "../../types/types";
+import { TagEntity } from "../../types/types";
 
 type Props = {
-  tag: JjTagEntity;
+  tag: TagEntity;
 };
 
 function TagPage({ tag }: Props) {

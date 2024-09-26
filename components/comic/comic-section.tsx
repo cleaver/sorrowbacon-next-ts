@@ -1,7 +1,7 @@
 import ReactMarkdown from "react-markdown";
 import { PrevNextElement } from "../../lib/api";
 import { webHost } from "../../lib/config";
-import { JjComicEntity, JjImageEntity, MaybeImage } from "../../types/types";
+import { ComicEntity, ImageEntity, MaybeImage } from "../../types/types";
 import CopyClipboard from "../sharing/copy-clipboard";
 import ShareFacebook from "../sharing/share-facebook";
 import ShareTwitter from "../sharing/share-twitter";
@@ -11,7 +11,7 @@ import PrevNextNav from "./prev-next-nav";
 
 type Props = {
   prevNext: PrevNextElement;
-  comic: JjComicEntity;
+  comic: ComicEntity;
 };
 
 function ComicSection({ comic, prevNext }: Props) {
@@ -40,7 +40,7 @@ function ComicSection({ comic, prevNext }: Props) {
   );
 }
 
-function isImage(image: MaybeImage): image is JjImageEntity {
+function isImage(image: MaybeImage): image is ImageEntity {
   return (
     typeof image === "object" &&
     image.hasOwnProperty("id") &&

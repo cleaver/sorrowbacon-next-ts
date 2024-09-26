@@ -1,8 +1,8 @@
-import { JjImageEntity } from "../../types/types";
+import { ImageEntity } from "../../types/types";
 import Comic from "./comic";
 
 type Props = {
-  images: JjImageEntity[];
+  images: ImageEntity[];
   imageAltText: string;
 };
 

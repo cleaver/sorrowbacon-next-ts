@@ -13,9 +13,9 @@ import {
   revalidateInterval,
 } from "../lib/config";
 import {
-  JjComicCollectionResponse,
-  JjComicEntityResponse,
-  JjTagEntityResponse,
+  ComicCollectionResponse,
+  ComicEntityResponse,
+  TagEntityResponse,
   NotFoundResponse,
   PageEntityResponse,
   SettingCollection,
@@ -50,7 +50,7 @@ async function apiCall(query: string, variables = {}) {
  */
 export async function getFrontPage() {
   const result = await apiCall("/comics/_front");
-  const jsonData: JjComicEntityResponse = await result.json();
+  const jsonData: ComicEntityResponse = await result.json();
   guardNotFoundResponse(jsonData);
   const comic = jsonData.data;
   const site = await getCachedSiteSettings();
@@ -77,7 +77,7 @@ function isNotFoundResponse<T>(response: T): response is T & NotFoundResponse {
  */
 export async function getComicBySlug(slug: string) {
   const result = await apiCall(`/comics/${slug}`);
-  const jsonData: JjComicEntityResponse = await result.json();
+  const jsonData: ComicEntityResponse = await result.json();
   guardNotFoundResponse(jsonData);
   const comic = jsonData.data;
   const site = await getCachedSiteSettings();
@@ -150,7 +150,7 @@ export async function getPrevNextForSlug(slug: string) {
  */
 export async function getTagLinksBySlug(slug: string) {
   const tagResult = await apiCall(`/tags/${slug}`);
-  const tagData: JjTagEntityResponse = await tagResult.json();
+  const tagData: TagEntityResponse = await tagResult.json();
   guardNotFoundResponse(tagData);
   return tagData.data;
 }
@@ -180,7 +180,7 @@ export async function getArchivePage(pageNumber: number) {
   const result = await apiCall(
     `/comics/?page=${pageNumber}&page_size=${archivePageSize}`,
   );
-  const archiveJson: JjComicCollectionResponse = await result.json();
+  const archiveJson: ComicCollectionResponse = await result.json();
   guardNotFoundResponse(archiveJson);
   return archiveJson.data;
 }

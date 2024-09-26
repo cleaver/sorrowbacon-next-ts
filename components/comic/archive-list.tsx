@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { JjComicCollection } from "../../types/types";
+import { ComicCollection } from "../../types/types";
 
 type Props = {
-  comics: JjComicCollection;
+  comics: ComicCollection;
 };
 
 function ArchiveList({ comics }: Props) {

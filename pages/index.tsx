@@ -2,10 +2,10 @@ import Head from "next/head";
 import ComicSection from "../components/comic/comic-section";
 import { getFrontPage, getPrevNextForSlug, PrevNextElement } from "../lib/api";
 import { revalidateInterval, webHost } from "../lib/config";
-import { JjComicEntity, SiteSettings } from "../types/types";
+import { ComicEntity, SiteSettings } from "../types/types";
 
 type Props = {
-  comic: JjComicEntity;
+  comic: ComicEntity;
   site: SiteSettings;
   prevNext: PrevNextElement;
 };

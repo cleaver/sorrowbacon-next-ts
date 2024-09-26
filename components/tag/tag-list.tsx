@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { JjTagCollection } from "../../types/types";
+import { TagCollection } from "../../types/types";
 
 type Props = {
-  tags: JjTagCollection;
+  tags: TagCollection;
 };
 
 function TagList({ tags }: Props) {

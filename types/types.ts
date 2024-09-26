@@ -28,28 +28,28 @@ export type IdentifiedEntity = {
   id: number;
 };
 
-export type JjImage = {
+export type Image = {
   name: string;
   url: string;
 };
 
-export type MaybeImage = JjImage | {} | "not loaded";
+export type MaybeImage = Image | {} | "not loaded";
 
-export type JjImageEntity = IdentifiedEntity & JjImage;
+export type ImageEntity = IdentifiedEntity & Image;
 
-export type JjImageCollection = JjImageEntity[];
+export type ImageCollection = ImageEntity[];
 
-export type JjTag = {
+export type Tag = {
   name: string;
   slug: string;
   comics: ComicStubCollection;
 };
 
-export type JjTagEntity = IdentifiedEntity & JjTag;
+export type TagEntity = IdentifiedEntity & Tag;
 
-export type JjTagCollection = JjTagEntity[];
+export type TagCollection = TagEntity[];
 
-export type JjTagEntityResponse = DataResponse<JjTagEntity> | NotFoundResponse;
+export type TagEntityResponse = DataResponse<TagEntity> | NotFoundResponse;
 
 export type ComicStub = {
   title: string;
@@ -68,29 +68,27 @@ export type ComicStubEntity = IdentifiedEntity & ComicStub;
 
 export type ComicStubCollection = ComicStubEntity[];
 
-export type JjComic = {
+export type Comic = {
   title: string;
   body: string;
   post_date: Scalars["DateTime"];
   slug: string;
   meta_description: string;
   image_alt_text: string;
-  media: JjImageEntity | {} | "not loaded";
+  media: ImageEntity | {} | "not loaded";
   media_id: number;
-  tags: JjTagCollection | "not loaded";
+  tags: TagCollection | "not loaded";
   published: boolean;
 };
 
-export type JjComicEntity = IdentifiedEntity & JjComic;
+export type ComicEntity = IdentifiedEntity & Comic;
 
-export type JjComicCollection = JjComicEntity[];
+export type ComicCollection = ComicEntity[];
 
-export type JjComicEntityResponse =
-  | DataResponse<JjComicEntity>
-  | NotFoundResponse;
+export type ComicEntityResponse = DataResponse<ComicEntity> | NotFoundResponse;
 
-export type JjComicCollectionResponse =
-  | DataResponse<JjComicCollection>
+export type ComicCollectionResponse =
+  | DataResponse<ComicCollection>
   | NotFoundResponse;
 
 export type Slug = string;
