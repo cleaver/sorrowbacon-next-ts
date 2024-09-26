@@ -7,7 +7,7 @@ type Props = {
   imageAltText: string;
 };
 
-function Comic({ image, imageAltText, key }: Props) {
+function Comic({ image, imageAltText }: Props) {
   const imageUrl = image.url || "";
   const url = `${apiServer}${imageUrl}`;
 
