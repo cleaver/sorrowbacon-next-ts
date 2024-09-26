@@ -1,4 +1,4 @@
-export const apiServer = process.env.API_SERVER || "http://locahost:4000";
+export const apiServer = process.env.API_SERVER || "http://localhost:4000";
 
 export const apiKey = process.env.API_KEY;
 
