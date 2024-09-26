@@ -5,7 +5,6 @@ import { ImageEntity } from "../../types/types";
 type Props = {
   image: ImageEntity;
   imageAltText: string;
-  key: string;
 };
 
 function Comic({ image, imageAltText, key }: Props) {
@@ -18,7 +17,6 @@ function Comic({ image, imageAltText, key }: Props) {
       alt={imageAltText}
       width={1000}
       height={1000}
-      key={key}
       priority={true}
     />
   );

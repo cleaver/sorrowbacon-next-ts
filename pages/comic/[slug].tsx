@@ -1,14 +1,9 @@
 import { GetStaticPropsContext } from "next";
 import Head from "next/head";
 import ComicSection from "../../components/comic/comic-section";
-import {
-  getAllSlugs,
-  getComicBySlug,
-  getPrevNextForSlug,
-  PrevNextElement,
-} from "../../lib/api";
+import { getAllSlugs, getComicBySlug, getPrevNextForSlug } from "../../lib/api";
 import { revalidateInterval, webHost } from "../../lib/config";
-import { ComicEntity, SiteSettings } from "../../types/types";
+import { ComicEntity, PrevNextElement, SiteSettings } from "../../types/types";
 
 type Props = {
   comic: ComicEntity;

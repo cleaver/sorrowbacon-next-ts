@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { PrevNextElement } from "../../lib/api";
 import nextImg from "../../public/menu/next-arrow.png";
 import prevImg from "../../public/menu/prev-arrow.png";
+import { PrevNextElement } from "../../types/types";
 
 type Props = {
   prevNext: PrevNextElement;

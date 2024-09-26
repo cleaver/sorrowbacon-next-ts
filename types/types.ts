@@ -14,6 +14,11 @@ export type Scalars = {
   AboutBlocksDynamicZoneInput: any;
 };
 
+export type PrevNextElement = {
+  prev: string | null;
+  next: string | null;
+};
+
 export type DataResponse<T> = {
   data: T;
 };

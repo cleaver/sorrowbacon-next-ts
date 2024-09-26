@@ -22,14 +22,10 @@ import {
   SettingCollectionResponse,
   SiteSettings,
   SlugCollectionResponse,
+  PrevNextElement,
 } from "../types/types";
 
 const url = apiServer + "/api";
-
-export type PrevNextElement = {
-  prev: string | null;
-  next: string | null;
-};
 
 async function apiCall(query: string, variables = {}) {
   const url_query = url + query;
@@ -93,7 +89,7 @@ export async function getAllSlugs() {
   const slugsResult = await apiCall("/comics?select=slug");
   const slugsData: SlugCollectionResponse = await slugsResult.json();
   guardNotFoundResponse(slugsData);
-  return slugsData.data;
+  return slugsData.data.reverse();
 }
 
 /**

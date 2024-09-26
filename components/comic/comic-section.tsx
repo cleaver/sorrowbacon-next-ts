@@ -1,7 +1,12 @@
 import ReactMarkdown from "react-markdown";
-import { PrevNextElement } from "../../lib/api";
 import { webHost } from "../../lib/config";
-import { ComicEntity, ImageEntity, MaybeImage } from "../../types/types";
+import {
+  ComicEntity,
+  ImageEntity,
+  MaybeImage,
+  PrevNextElement,
+  TagCollection,
+} from "../../types/types";
 import CopyClipboard from "../sharing/copy-clipboard";
 import ShareFacebook from "../sharing/share-facebook";
 import ShareTwitter from "../sharing/share-twitter";
@@ -35,7 +40,7 @@ function ComicSection({ comic, prevNext }: Props) {
         <ShareTwitter url={shareUrl} />
         <CopyClipboard text={shareUrl} />
       </div>
-      <TagList tags={comic.tags} />
+      {isTagList(comic.tags) && <TagList tags={comic.tags} />}
     </article>
   );
 }
@@ -47,6 +52,10 @@ function isImage(image: MaybeImage): image is ImageEntity {
     image.hasOwnProperty("url") &&
     image.hasOwnProperty("name")
   );
+}
+
+function isTagList(tags: TagCollection | "not loaded"): tags is TagCollection {
+  return tags !== "not loaded";
 }
 
 export default ComicSection;
