@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { apiServer } from "../../lib/config";
-import { JjImageEntity } from "../../types/jj_types";
+import { JjImageEntity } from "../../types/types";
 
 type Props = {
   image: JjImageEntity;

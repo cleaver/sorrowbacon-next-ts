@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { JjTagCollection } from "../../types/jj_types";
+import { JjTagCollection } from "../../types/types";
 
 type Props = {
   tags: JjTagCollection;

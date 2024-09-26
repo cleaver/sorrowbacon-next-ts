@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { ComicEntity } from "../../types/types";
-import { JjComicCollection } from "../../types/jj_types";
+import { JjComicCollection } from "../../types/types";
 
 type Props = {
   comics: JjComicCollection;

@@ -1,7 +1,7 @@
 import ReactMarkdown from "react-markdown";
 import { PrevNextElement } from "../../lib/api";
 import { webHost } from "../../lib/config";
-import { JjComicEntity, JjImageEntity, MaybeImage } from "../../types/jj_types";
+import { JjComicEntity, JjImageEntity, MaybeImage } from "../../types/types";
 import CopyClipboard from "../sharing/copy-clipboard";
 import ShareFacebook from "../sharing/share-facebook";
 import ShareTwitter from "../sharing/share-twitter";

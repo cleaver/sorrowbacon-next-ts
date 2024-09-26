@@ -2,7 +2,7 @@ import Head from "next/head";
 import ComicSection from "../components/comic/comic-section";
 import { getFrontPage, getPrevNextForSlug, PrevNextElement } from "../lib/api";
 import { revalidateInterval, webHost } from "../lib/config";
-import { JjComicEntity, SiteSettings } from "../types/jj_types";
+import { JjComicEntity, SiteSettings } from "../types/types";
 
 type Props = {
   comic: JjComicEntity;

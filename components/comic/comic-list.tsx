@@ -1,4 +1,4 @@
-import { JjImageEntity } from "../../types/jj_types";
+import { JjImageEntity } from "../../types/types";
 import Comic from "./comic";
 
 type Props = {

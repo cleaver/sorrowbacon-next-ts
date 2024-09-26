@@ -22,7 +22,7 @@ import {
   SettingCollectionResponse,
   SiteSettings,
   SlugCollectionResponse,
-} from "../types/jj_types";
+} from "../types/types";
 
 const url = apiServer + "/api";
 

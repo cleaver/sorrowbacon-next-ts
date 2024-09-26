@@ -5,7 +5,7 @@ import ArchiveList from "../../components/comic/archive-list";
 import ArchivePager from "../../components/comic/archive-pager";
 import { getArchivePage, getArchivePageCount } from "../../lib/api";
 import { revalidateInterval } from "../../lib/config";
-import { JjComicCollection } from "../../types/jj_types";
+import { JjComicCollection } from "../../types/types";
 
 type Props = {
   comics: JjComicCollection;

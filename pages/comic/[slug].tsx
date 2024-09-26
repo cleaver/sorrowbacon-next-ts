@@ -8,7 +8,7 @@ import {
   PrevNextElement,
 } from "../../lib/api";
 import { revalidateInterval, webHost } from "../../lib/config";
-import { JjComicEntity, SiteSettings } from "../../types/jj_types";
+import { JjComicEntity, SiteSettings } from "../../types/types";
 
 type Props = {
   comic: JjComicEntity;

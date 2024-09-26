@@ -2,7 +2,7 @@ import Head from "next/head";
 import RichText from "../components/content/rich-text";
 import { getAbout } from "../lib/api";
 import { revalidateInterval, webHost } from "../lib/config";
-import { Page } from "../types/jj_types";
+import { Page } from "../types/types";
 
 type Props = {
   about: Page;
