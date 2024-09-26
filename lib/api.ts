@@ -17,6 +17,7 @@ import {
   JjComicEntityResponse,
   JjTagEntityResponse,
   NotFoundResponse,
+  PageEntityResponse,
   SettingCollection,
   SettingCollectionResponse,
   SiteSettings,
@@ -165,7 +166,12 @@ export async function getAllTagSlugs() {
   return tagsJson.data;
 }
 
-export async function getPageBySlug(slug: string) {}
+export async function getPageBySlug(slug: string) {
+  const result = await apiCall(`/pages/${slug}`);
+  const pageJson: PageEntityResponse = await result.json();
+  guardNotFoundResponse(pageJson);
+  return pageJson.data;
+}
 export async function getAbout() {
   return await getPageBySlug("about");
 }
@@ -183,7 +189,8 @@ export async function getArchivePageCount() {
   const result = await apiCall("/comics/_count");
   const pageCountJson = await result.json();
   guardNotFoundResponse(pageCountJson);
-  const pageCount = Math.ceil(pageCountJson.data.count) || 1;
+  const pageCount =
+    Math.ceil(pageCountJson.data.count / Number(archivePageSize)) || 1;
   return pageCount;
 }
 

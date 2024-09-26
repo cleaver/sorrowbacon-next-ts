@@ -1,18 +1,14 @@
 import Head from "next/head";
-import DynamicContent from "../components/content/dynamic-content";
+import RichText from "../components/content/rich-text";
 import { getAbout } from "../lib/api";
 import { revalidateInterval, webHost } from "../lib/config";
-import { AboutEntityResponse } from "../types/types";
+import { Page } from "../types/jj_types";
 
 type Props = {
-  about: AboutEntityResponse;
+  about: Page;
 };
 
 function AboutPage({ about }: Props) {
-  const title = about.data?.attributes?.title;
-  const maybeBlocksArray = about.data?.attributes?.blocks;
-  const blocks = Array.isArray(maybeBlocksArray) ? maybeBlocksArray : [];
-
   return (
     <>
       <Head>
@@ -21,10 +17,11 @@ function AboutPage({ about }: Props) {
         <meta name="description" content="About the sorrowbacon comic." />
         <meta name="og:description" content="About the sorrowbacon comic." />
         <meta name="og:url" content={webHost + "/about"} />
+        <meta name="og:image" content={webHost + about.media.url} />
       </Head>
       <article>
-        <h1 className="mt-12">{title}</h1>
-        <DynamicContent blocks={blocks} />
+        <h1 className="mt-12">{about.title}</h1>
+        <RichText body={about.body} />
       </article>
     </>
   );
