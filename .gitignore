@@ -43,3 +43,8 @@ yarn-error.log*
 
 #build log
 /build.log
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/tests-examples

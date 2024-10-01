@@ -39,7 +39,7 @@ function PrevNextNav({ prevNext }: Props) {
                 src={nextImg}
                 width={100}
                 height={40}
-                alt="Previous comic"
+                alt="Next comic"
                 className="h-8 w-auto hover:-skew-x-6 hover:translate-x-1 transition-transform"
               />
             </Link>
