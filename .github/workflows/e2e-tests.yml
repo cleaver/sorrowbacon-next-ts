@@ -1,0 +1,68 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout NextJS repository
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Build NextJS app
+      run: yarn build
+
+    - name: Checkout API repository
+      uses: actions/checkout@v3
+      with:
+        repository: cleaver/sb_cascade
+        path: api
+
+    - name: Start API server
+      run: |
+        cd api
+        make build
+        make test-start
+        
+    - name: Wait for API to be ready
+      run: |
+        timeout 60s bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:4000/users/log_in)" != "200" ]]; do sleep 5; done' || false
+
+    - name: Build NextJS app
+      run: yarn build
+
+    - name: Start NextJS app
+      run: yarn start &
+
+    - name: Wait for NextJS to be ready
+      run: |
+        timeout 60s bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:3000)" != "200" ]]; do sleep 5; done' || false
+
+    - name: Run Playwright tests
+      run: yarn playwright test
+
+    - name: Stop API server
+      run: |
+        cd api
+        docker-compose down
+
+    - name: Upload Playwright report
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30

@@ -9,7 +9,7 @@ from the backend CMS via API calls. (The `revalidateInterval` can be set in `lib
 
 ## Authentication
 
-There is an `API_KEY` environment variable required to access the backend CMS. See the backend repo for more details.
+There is an `API_KEY` environment variable required to access the backend CMS. See the [backend repo](https://github.com/cleaver/sb_cascade) for more details.
 
 ## Getting Started
 
