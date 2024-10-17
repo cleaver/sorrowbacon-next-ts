@@ -1,30 +1,22 @@
-import { GetStaticPathsContext, GetStaticPropsContext } from 'next';
-import Link from 'next/link';
-import { getAllTagSlugs, getTagLinksBySlug } from '../../lib/api';
-import { revalidateInterval } from '../../lib/config';
-import { TagEntity } from '../../types/types';
+import { GetStaticPathsContext, GetStaticPropsContext } from "next";
+import Link from "next/link";
+import { getAllTagSlugs, getTagLinksBySlug } from "../../lib/api";
+import { revalidateInterval } from "../../lib/config";
+import { TagEntity } from "../../types/types";
 
 type Props = {
   tag: TagEntity;
 };
 
 function TagPage({ tag }: Props) {
-  const comicList = tag?.attributes?.comics?.data;
-
-  if (!Array.isArray(comicList)) {
-    return;
-  }
-
-  const linkList = comicList.map((comic) => ({
-    slug: comic?.attributes?.slug,
-    title: comic?.attributes?.title,
+  const linkList = tag.comics.map((comic) => ({
+    slug: comic.slug,
+    title: comic.title,
   }));
 
   return (
     <article>
-      <h1 className="mt-12">
-        Comics Tagged &quot;{tag?.attributes?.name}&quot;{' '}
-      </h1>
+      <h1 className="mt-12">Comics Tagged &quot;{tag.name}&quot; </h1>
       <ul>
         {linkList.map(({ slug, title }) => (
           <li key={slug}>
@@ -69,7 +61,7 @@ export async function getStaticPaths(_ctx: GetStaticPathsContext) {
         },
       };
     }),
-    fallback: 'blocking',
+    fallback: "blocking",
   };
 }
 

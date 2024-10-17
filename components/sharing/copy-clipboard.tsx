@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import CopyIcon from './icons/copy-icon';
-import LinkIcon from './icons/link-icon';
+import React, { useEffect, useRef, useState } from "react";
+import CopyIcon from "./icons/copy-icon";
+import LinkIcon from "./icons/link-icon";
 
 type Props = {
   text: string;
@@ -34,9 +34,9 @@ function CopyClipboard({ text }: Props) {
     }, 2000);
   };
 
-  const linkClasses = ['flex', 'flex-row'];
+  const linkClasses = ["flex", "flex-row"];
   if (!show) {
-    linkClasses.push('hidden');
+    linkClasses.push("hidden");
   }
 
   return (
@@ -45,7 +45,7 @@ function CopyClipboard({ text }: Props) {
         <LinkIcon />
       </button>
 
-      <div className={linkClasses.join(' ')}>
+      <div className={linkClasses.join(" ")}>
         <input
           type="text"
           name="link"

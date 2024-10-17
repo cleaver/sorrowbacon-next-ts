@@ -1,12 +1,12 @@
-import Link from 'next/link';
-import { TagRelationResponseCollection } from '../../types/types';
+import Link from "next/link";
+import { TagCollection } from "../../types/types";
 
 type Props = {
-  tags: TagRelationResponseCollection | null | undefined;
+  tags: TagCollection;
 };
 
 function TagList({ tags }: Props) {
-  if (!tags || tags.data.length === 0) {
+  if (tags.length === 0) {
     return null;
   }
   return (
@@ -14,9 +14,9 @@ function TagList({ tags }: Props) {
       <div className="flex-shrink font-bold">Tags:</div>
       <div className="flex-grow">
         <ul className="list-none m-0">
-          {tags.data.map((tag) => {
-            const slug = tag?.attributes?.slug;
-            const name = tag?.attributes?.name;
+          {tags.map((tag) => {
+            const slug = tag.slug;
+            const name = tag.name;
 
             return (
               <li className="mt-0 mb-3" key={slug}>

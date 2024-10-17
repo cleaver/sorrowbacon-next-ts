@@ -1,14 +1,14 @@
-import Image from 'next/image';
-import { apiServer } from '../../lib/config';
-import { UploadFileEntity } from '../../types/types';
+import Image from "next/image";
+import { apiServer } from "../../lib/config";
+import { ImageEntity } from "../../types/types";
 
 type Props = {
-  image: UploadFileEntity;
+  image: ImageEntity;
   imageAltText: string;
-  key: string;
 };
-function Comic({ image, imageAltText, key }: Props) {
-  const imageUrl = image?.attributes?.url || '';
+
+function Comic({ image, imageAltText }: Props) {
+  const imageUrl = image.url || "";
   const url = `${apiServer}${imageUrl}`;
 
   return (
@@ -17,7 +17,6 @@ function Comic({ image, imageAltText, key }: Props) {
       alt={imageAltText}
       width={1000}
       height={1000}
-      key={key}
       priority={true}
     />
   );

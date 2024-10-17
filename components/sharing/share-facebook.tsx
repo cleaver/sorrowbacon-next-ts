@@ -1,4 +1,4 @@
-import FacebookIcon from './icons/facebook-icon';
+import FacebookIcon from "./icons/facebook-icon";
 
 type Props = {
   url: string;

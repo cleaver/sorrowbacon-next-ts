@@ -1,4 +1,4 @@
-import TwitterIcon from './icons/twitter-icon';
+import TwitterIcon from "./icons/twitter-icon";
 
 type Props = {
   url: string;

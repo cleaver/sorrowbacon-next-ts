@@ -1,14 +1,14 @@
-import { GetStaticPropsContext } from 'next';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import ArchiveList from '../../components/comic/archive-list';
-import ArchivePager from '../../components/comic/archive-pager';
-import { getArchivePage, getArchivePageCount } from '../../lib/api';
-import { revalidateInterval } from '../../lib/config';
-import { ComicEntity } from '../../types/types';
+import { GetStaticPropsContext } from "next";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import ArchiveList from "../../components/comic/archive-list";
+import ArchivePager from "../../components/comic/archive-pager";
+import { getArchivePage, getArchivePageCount } from "../../lib/api";
+import { revalidateInterval } from "../../lib/config";
+import { ComicCollection } from "../../types/types";
 
 type Props = {
-  comics: ComicEntity[];
+  comics: ComicCollection;
   pageCount: number;
 };
 
@@ -66,7 +66,7 @@ export async function getStaticPaths() {
     paths.push({ params: { page: `${page}` } });
   }
 
-  return { paths: paths, fallback: 'blocking' };
+  return { paths: paths, fallback: "blocking" };
 }
 
 export default ArchivePage;

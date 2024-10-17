@@ -1,11 +1,11 @@
 function LinkIcon() {
   const svgStyle = {
-    fill: 'none',
-    stroke: '#606060',
-    strokeMiterlimit: '10',
-    strokeWidth: '16',
-    height: '24px',
-    width: '24px',
+    fill: "none",
+    stroke: "#606060",
+    strokeMiterlimit: "10",
+    strokeWidth: "16",
+    height: "24px",
+    width: "24px",
   };
 
   return (

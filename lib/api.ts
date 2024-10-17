@@ -4,36 +4,38 @@
  * API for static generation (SSG).
  *
  */
-import { accessCache } from 'next-build-cache';
+import { accessCache } from "next-build-cache";
 import {
-  apiKey, apiServer, archivePageSize, buildCacheFile, revalidateInterval
-} from '../lib/config';
+  apiKey,
+  apiServer,
+  archivePageSize,
+  buildCacheFile,
+  revalidateInterval,
+} from "../lib/config";
 import {
-  ComicEntity,
-  SiteEntity,
-  TagEntity,
-  TagEntityResponseCollection
-} from '../types/types';
+  ComicCollectionResponse,
+  ComicEntityResponse,
+  TagEntityResponse,
+  NotFoundResponse,
+  PageEntityResponse,
+  SettingCollection,
+  SettingCollectionResponse,
+  SiteSettings,
+  SlugCollectionResponse,
+  PrevNextElement,
+} from "../types/types";
 
-const url = apiServer + '/graphql';
-
-export type PrevNextElement = {
-  prev: string | null;
-  next: string | null;
-};
+const url = apiServer + "/api";
 
 async function apiCall(query: string, variables = {}) {
-  return await fetch(url, {
-    method: 'POST',
+  const url_query = url + query;
+  return await fetch(url_query, {
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+      "Content-Type": "application/json",
+      Accept: "application/json",
       Authorization: `Bearer ${apiKey}`,
     },
-    body: JSON.stringify({
-      query: query,
-      variables: variables,
-    }),
   });
 }
 
@@ -43,57 +45,24 @@ async function apiCall(query: string, variables = {}) {
  * @returns comic
  */
 export async function getFrontPage() {
-  const result = await apiCall(
-    `
-      {
-        comics(sort: "post_date:desc", pagination: {page:1, pageSize: 1}) {
-          data {
-            id
-            attributes {
-              title
-              body
-              slug
-              post_date
-              meta_description
-              image_alt_text
-              image {
-                data {
-                  attributes {
-                    name
-                    url
-                  }
-                }
-              }
-              tags {
-                data {
-                  attributes {
-                    name
-                    slug
-                  }
-                }
-              }
-            }
-          }
-        }
-        site {
-          data {
-            attributes {
-              site_name
-              seo {
-                metaTitle
-                metaDescription
-              }
-            }
-          }
-        }
-      }
-    `
-  );
-  const jsonData = await result.json();
-  const comicArray = jsonData?.data?.comics?.data;
-  const comic: ComicEntity = Array.isArray(comicArray) ? comicArray[0] : {};
-  const site: SiteEntity = jsonData.data?.site?.data;
+  const result = await apiCall("/comics/_front");
+  const jsonData: ComicEntityResponse = await result.json();
+  guardNotFoundResponse(jsonData);
+  const comic = jsonData.data;
+  const site = await getCachedSiteSettings();
   return { comic, site };
+}
+
+function guardNotFoundResponse<T>(
+  response: T,
+): asserts response is Exclude<T, NotFoundResponse> {
+  if (isNotFoundResponse<T>(response)) {
+    throw new Error(response.errors.detail);
+  }
+}
+
+function isNotFoundResponse<T>(response: T): response is T & NotFoundResponse {
+  return (response as NotFoundResponse).errors !== undefined;
 }
 
 /**
@@ -103,63 +72,11 @@ export async function getFrontPage() {
  * @returns comic
  */
 export async function getComicBySlug(slug: string) {
-  const result = await apiCall(
-    `
-      query ComicBySlug($slug: String) {
-        comics(
-          filters: { slug: { eq: $slug } }
-          pagination: { page: 1, pageSize: 1 }
-        ) {
-          data {
-            id
-            attributes {
-              title
-              body
-              slug
-              post_date
-              meta_description
-              image_alt_text
-              image {
-                data {
-                  attributes {
-                    name
-                    url
-                  }
-                }
-              }
-              tags {
-                data {
-                  attributes {
-                    name
-                    slug
-                  }
-                }
-              }
-            }
-          }
-        }
-        site {
-          data {
-            attributes {
-              site_name
-              seo {
-                metaTitle
-                metaDescription
-              }
-            }
-          }
-        }
-      }
-    `,
-    {
-      slug: slug,
-    }
-  );
-  const jsonData = await result.json();
-  const comicArray = jsonData?.data?.comics?.data;
-  const comic: ComicEntity = Array.isArray(comicArray) ? comicArray[0] : {};
-  const site: SiteEntity = jsonData.data?.site?.data;
-
+  const result = await apiCall(`/comics/${slug}`);
+  const jsonData: ComicEntityResponse = await result.json();
+  guardNotFoundResponse(jsonData);
+  const comic = jsonData.data;
+  const site = await getCachedSiteSettings();
   return { comic, site };
 }
 
@@ -169,30 +86,10 @@ export async function getComicBySlug(slug: string) {
  * @returns an array of all comic slugs
  */
 export async function getAllSlugs() {
-  const slugsResult = await apiCall(
-    `
-      query Slugs {
-        comics(sort: "post_date:asc", pagination: {pageSize: 9999}) {
-          data {
-            attributes {
-              slug
-            }
-          }
-        }
-      }
-    `
-  );
-
-  const slugsData = await slugsResult.json();
-  const dataArray = slugsData?.data?.comics?.data;
-
-  if (!Array.isArray(dataArray)) {
-    return [];
-  }
-  const slugsArray: string[] = dataArray.map(
-    (comic) => comic?.attributes?.slug
-  );
-  return slugsArray;
+  const slugsResult = await apiCall("/comics?select=slug");
+  const slugsData: SlugCollectionResponse = await slugsResult.json();
+  guardNotFoundResponse(slugsData);
+  return slugsData.data.reverse();
 }
 
 /**
@@ -228,12 +125,12 @@ async function getPrevNextMap(): Promise<object> {
 export async function getPrevNextForSlug(slug: string) {
   const cache = accessCache(buildCacheFile);
 
-  let map: any = await cache.get('prev-next-map');
+  let map: any = await cache.get("prev-next-map");
 
   if (!map) {
     map = await getPrevNextMap();
 
-    await cache.put('prev-next-map', map, 1000 * revalidateInterval);
+    await cache.put("prev-next-map", map, 1000 * revalidateInterval);
   }
 
   const prevNext: PrevNextElement | null = map[slug] || null;
@@ -242,43 +139,16 @@ export async function getPrevNextForSlug(slug: string) {
 }
 
 /**
- * Get tag  by slug.
+ * Get tag by slug.
  *
  * @param slug The unique slug for the tag.
- * @returns tag with partially populated comics (slug and title).
+ * @returns tag with partially populated comics.
  */
 export async function getTagLinksBySlug(slug: string) {
-  const tagResult = await apiCall(
-    `
-      query TagBySlug($slug: String) {
-        tags(filters: { slug: { eq: $slug } }, pagination: { page: 1, pageSize: 1 }) {
-          data {
-            id
-            attributes {
-              slug
-              name
-              comics {
-                data {
-                  attributes {
-                    title
-                    slug
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    `,
-    {
-      slug: slug,
-    }
-  );
-  const tagData = await tagResult.json();
-
-  const tagArray = tagData?.data?.tags?.data;
-  const tag: TagEntity = Array.isArray(tagArray) ? tagArray[0] : {};
-  return tag;
+  const tagResult = await apiCall(`/tags/${slug}`);
+  const tagData: TagEntityResponse = await tagResult.json();
+  guardNotFoundResponse(tagData);
+  return tagData.data;
 }
 
 /**
@@ -286,136 +156,90 @@ export async function getTagLinksBySlug(slug: string) {
  * @returns array of tag slugs
  */
 export async function getAllTagSlugs() {
-  const result = await apiCall(
-    `
-      query Tags {
-        tags(pagination: {pageSize: 9999 }) {
-          data {
-            attributes {
-              slug
-            }
-          }
-        }
-      }
-    `
-  );
-
-  const tagsJson = await result.json();
-  const tagData: TagEntityResponseCollection = tagsJson?.data?.tags;
-  const tagArray = tagData.data;
-
-  if (!Array.isArray(tagArray)) {
-    return [];
-  }
-
-  const slugsArray = tagArray.reduce(
-    (notUndefined: string[], maybeUndefinedTag) => {
-      if (!!maybeUndefinedTag?.attributes?.slug) {
-        notUndefined.push(maybeUndefinedTag?.attributes?.slug);
-      }
-      return notUndefined;
-    },
-    []
-  );
-
-  return slugsArray;
+  const result = await apiCall("/tags/?select=slug");
+  const tagsJson: SlugCollectionResponse = await result.json();
+  guardNotFoundResponse(tagsJson);
+  return tagsJson.data;
 }
 
+export async function getPageBySlug(slug: string) {
+  const result = await apiCall(`/pages/${slug}`);
+  const pageJson: PageEntityResponse = await result.json();
+  guardNotFoundResponse(pageJson);
+  return pageJson.data;
+}
 export async function getAbout() {
-  const result = await apiCall(
-    `
-      query About {
-        about {
-          data {
-            id
-            attributes {
-              title
-              blocks {
-                __typename
-                ...on ComponentSharedQuote {
-                  title
-                  body
-                }
-                ...on ComponentSharedRichText {
-                  body
-                }
-                ...on ComponentSharedMedia {
-                  file {
-                    data {
-                      id
-                      attributes{
-                        name
-                        alternativeText
-                        url
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    `
-  );
-
-  const aboutJson = await result.json();
-  const about = aboutJson.data?.about;
-  return about;
+  return await getPageBySlug("about");
 }
 
 export async function getArchivePage(pageNumber: number) {
   const result = await apiCall(
-    `
-    query ArchiveList($page: Int, $pageSize: Int) {
-      comics(sort: "post_date:desc", pagination: {page: $page, pageSize: $pageSize}) {
-        data {
-          attributes{
-            slug
-            title
-          }
-        }
-        meta {
-          pagination {
-            page
-            pageSize
-            pageCount
-          }
-        }
-      }
-    }
-  `,
-    {
-      page: pageNumber,
-      pageSize: archivePageSize,
-    }
+    `/comics/?page=${pageNumber}&page_size=${archivePageSize}`,
   );
-  const archiveJson = await result.json();
-  const archiveList = archiveJson.data?.comics?.data;
-
-  return archiveList;
+  const archiveJson: ComicCollectionResponse = await result.json();
+  guardNotFoundResponse(archiveJson);
+  return archiveJson.data;
 }
 
 export async function getArchivePageCount() {
-  const result = await apiCall(
-    `
-    query ArchivePageCount($pageSize: Int) {
-      comics(sort: "post_date:desc", pagination: {pageSize: $pageSize}) {
-        meta {
-          pagination {
-            pageCount
-          }
-        }
-      }
-    }
-    `,
-    { pageSize: archivePageSize }
-  );
-
+  const result = await apiCall("/comics/_count");
   const pageCountJson = await result.json();
-
+  guardNotFoundResponse(pageCountJson);
   const pageCount =
-    pageCountJson.data?.comics?.meta?.pagination?.pageCount || 1;
-
+    Math.ceil(pageCountJson.data.count / Number(archivePageSize)) || 1;
   return pageCount;
+}
+
+/**
+ * Get site settings from cache or API.
+ *
+ * @returns SiteSettings object.
+ */
+export async function getCachedSiteSettings() {
+  const cache = accessCache(buildCacheFile);
+  let settings: SiteSettings | unknown = await cache.get("site-settings");
+
+  if (!settings) {
+    settings = await getSiteSettings();
+    await cache.put("site-settings", settings, 1000 * revalidateInterval);
+  }
+
+  return settings as SiteSettings;
+}
+
+/**
+ * Get site settings.
+ *
+ * @returns SiteSettings object.
+ */
+export async function getSiteSettings(): Promise<SiteSettings> {
+  const result = await apiCall("/settings");
+  const jsonData: SettingCollectionResponse = await result.json();
+
+  if (isNotFoundResponse(jsonData)) {
+    throw new Error(jsonData.errors.detail);
+  }
+
+  const settings: SettingCollection = jsonData.data;
+  const siteSettings = convertSettingsArrayToObject(settings);
+
+  return siteSettings;
+}
+
+function convertSettingsArrayToObject(
+  settingsArray: SettingCollection,
+): SiteSettings {
+  const settingsObject: SiteSettings = {
+    site_title: "",
+    meta_title: "",
+    meta_description: "",
+  };
+
+  settingsArray.forEach((setting) => {
+    if (setting.key in Object.keys(settingsObject)) {
+      settingsObject[setting.key as keyof SiteSettings] = setting.value;
+    }
+  });
+
+  return settingsObject;
 }

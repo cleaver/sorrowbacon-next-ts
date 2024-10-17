@@ -7,24 +7,24 @@ const nextConfig = {
     unoptimized: false,
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 'localhost',
+        protocol: "http",
+        hostname: "localhost",
       },
       {
-        protocol: 'http',
-        hostname: 'strapi',
+        protocol: "http",
+        hostname: "strapi",
       },
       {
-        protocol: 'https',
-        hostname: 'sb.pimpsmooth.com',
+        protocol: "https",
+        hostname: "sb.pimpsmooth.com",
       },
     ],
   },
   async redirects() {
     return [
       {
-        source: '/archive',
-        destination: '/archive/1',
+        source: "/archive",
+        destination: "/archive/1",
         permanent: true,
       },
     ];

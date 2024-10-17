@@ -1,6 +1,6 @@
-import Head from 'next/head';
-import MailchimpForm from '../components/newsletter/mailchimp-form';
-import { webHost } from '../lib/config';
+import Head from "next/head";
+import MailchimpForm from "../components/newsletter/mailchimp-form";
+import { webHost } from "../lib/config";
 
 function ContactPage() {
   return (
@@ -13,7 +13,7 @@ function ContactPage() {
           name="og:description"
           content="Sign up for the sorrowbacon newsletter."
         />
-        <meta name="og:url" content={webHost + '/newsletter'} />
+        <meta name="og:url" content={webHost + "/newsletter"} />
       </Head>
       <article className="flex flex-col">
         <h1 className="mt-12">Get Updates!</h1>
