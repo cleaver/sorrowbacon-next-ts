@@ -45,13 +45,14 @@ jobs:
       run: |
         timeout 60s bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:4000/users/log_in)" != "200" ]]; do sleep 5; done' || false
 
-    - name: Echo API_KEY
-      run: echo $API_KEY
-
     - name: Build NextJS app
+      env:
+        API_KEY: ${{ secrets.API_KEY }}
       run: yarn build
 
     - name: Start NextJS app
+      env:
+        API_KEY: ${{ secrets.API_KEY }}
       run: yarn start &
 
     - name: Wait for NextJS to be ready
