@@ -27,6 +27,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         repository: cleaver/sb_cascade
+        ref: main
         path: api
 
     - name: Start API server
