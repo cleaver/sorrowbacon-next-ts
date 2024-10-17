@@ -68,7 +68,7 @@ jobs:
     - name: Stop API server
       run: |
         cd api
-        docker-compose down
+        make test-stop
 
     - name: Upload Playwright report
       uses: actions/upload-artifact@v3
