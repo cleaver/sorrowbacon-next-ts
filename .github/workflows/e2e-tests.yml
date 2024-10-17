@@ -60,7 +60,7 @@ jobs:
         timeout 60s bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:3000)" != "200" ]]; do sleep 5; done' || false
 
     - name: Install Playwright tests
-      run: yarn playwright install
+      run: yarn playwright install --with-deps
 
     - name: Run Playwright tests
       run: yarn playwright test
