@@ -5,7 +5,8 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY package.json yarn.lock*
+COPY package.json yarn.lock* ./
+RUN yarn install
 
 # Rebuild the source code only when needed
 FROM node:20-alpine AS builder
@@ -18,10 +19,10 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1
 
-ARG API_SERVER
-ARG API_KEY
-ARG NEXT_PUBLIC_MAILCHIMP_URL
-ARG NEXT_PUBLIC_GA_MEASUREMENT_ID
+# ARG API_SERVER
+# ARG API_KEY
+# ARG NEXT_PUBLIC_MAILCHIMP_URL
+# ARG NEXT_PUBLIC_GA_MEASUREMENT_ID
 
 RUN yarn build
 
