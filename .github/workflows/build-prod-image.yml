@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - 'VERSION'
+      - "VERSION"
   workflow_dispatch:
 
 jobs:
@@ -43,9 +43,9 @@ jobs:
       # Build the Docker image
       - name: Build the Docker image
         run: |
-          make prod
+          docker build -f Dockerfile.production -t ghcr.io/${{ github.repository }}/sorrowbacon-next-ts:`cat VERSION` .
 
       # Push the Docker image to GitHub Container Registry
       - name: Push the Docker image
         run: |
-          make push
+          docker push ghcr.io/${{ github.repository }}/sorrowbacon-next-ts:`cat VERSION`
