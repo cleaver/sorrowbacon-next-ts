@@ -24,10 +24,7 @@ ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1
 # ARG NEXT_PUBLIC_MAILCHIMP_URL
 # ARG NEXT_PUBLIC_GA_MEASUREMENT_ID
 
-RUN yarn build
-
-# If using npm comment out above and use below instead
-# RUN npm run build
+# RUN yarn build
 
 # Production image, copy all the files and run next
 FROM node:20-alpine AS runner
@@ -53,4 +50,4 @@ EXPOSE 3000
 
 ENV PORT 3000
 
-CMD ["yarn", "start"]
+CMD ["yarn", "buildstart"]
