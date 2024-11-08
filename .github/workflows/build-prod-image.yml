@@ -1,4 +1,4 @@
-name: Build NextJS Docker Image
+name: Build NextJS Production Image
 
 # Trigger the workflow on pushes or merges to the `main` branch
 on:
