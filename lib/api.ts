@@ -54,7 +54,7 @@ export async function getFrontPage() {
 }
 
 function guardNotFoundResponse<T>(
-  response: T,
+  response: T
 ): asserts response is Exclude<T, NotFoundResponse> {
   if (isNotFoundResponse<T>(response)) {
     throw new Error(response.errors.detail);
@@ -174,7 +174,7 @@ export async function getAbout() {
 
 export async function getArchivePage(pageNumber: number) {
   const result = await apiCall(
-    `/comics/?page=${pageNumber}&page_size=${archivePageSize}`,
+    `/comics/?page=${pageNumber}&page_size=${archivePageSize}`
   );
   const archiveJson: ComicCollectionResponse = await result.json();
   guardNotFoundResponse(archiveJson);
@@ -227,7 +227,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
 }
 
 function convertSettingsArrayToObject(
-  settingsArray: SettingCollection,
+  settingsArray: SettingCollection
 ): SiteSettings {
   const settingsObject: SiteSettings = {
     site_title: "",
