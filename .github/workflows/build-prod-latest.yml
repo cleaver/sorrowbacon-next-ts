@@ -1,15 +1,15 @@
 name: Build NextJS Latest Production Image
-
 on:
-  push:
-    branches:
-      - main
-  pull_request:
+  workflow_run:
+    workflows: ["Elixir CI"]
+    types:
+      - completed
     branches:
       - main
 
 jobs:
   build:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
