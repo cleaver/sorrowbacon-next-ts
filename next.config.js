@@ -12,11 +12,11 @@ const nextConfig = {
       },
       {
         protocol: "http",
-        hostname: "strapi",
+        hostname: "cascade",
       },
       {
         protocol: "https",
-        hostname: "sb.pimpsmooth.com",
+        hostname: "sbcms.pimpsmooth.com",
       },
     ],
   },
