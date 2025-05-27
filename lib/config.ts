@@ -1,9 +1,5 @@
 export const apiServer = process.env.API_SERVER || "http://cascade:4000";
 
-console.log("------------------------------------------------------------------");
-console.log("apiServer:", apiServer);
-console.log("------------------------------------------------------------------");
-
 export const apiKey = process.env.API_KEY;
 
 export const webHost = process.env.WEB_HOST || "https://sorrowbacon.com";
