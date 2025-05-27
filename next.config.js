@@ -9,10 +9,12 @@ const nextConfig = {
       {
         protocol: "http",
         hostname: "localhost",
+        port: "4000",
       },
       {
         protocol: "http",
         hostname: "cascade",
+        port: "4000",
       },
       {
         protocol: "https",
