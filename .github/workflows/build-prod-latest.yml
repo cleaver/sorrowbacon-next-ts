@@ -1,7 +1,7 @@
 name: Build NextJS Latest Production Image
 on:
   workflow_run:
-    workflows: ["Elixir CI"]
+    workflows: ["E2E Tests"]
     types:
       - completed
     branches:
