@@ -1,4 +1,4 @@
-export const apiServer = process.env.API_SERVER || "http://localhost:4000";
+export const apiServer = process.env.API_SERVER || "http://cascade:4000";
 
 console.log("------------------------------------------------------------------");
 console.log("apiServer:", apiServer);
