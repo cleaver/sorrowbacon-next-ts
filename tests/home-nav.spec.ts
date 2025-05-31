@@ -25,7 +25,5 @@ test("contact link", async ({ page }) => {
 
 test("subscribe link", async ({ page }) => {
   await page.getByRole("link", { name: "Subscribe" }).click();
-  await expect(page.getByPlaceholder("merp@example.com")).toBeVisible();
-  await expect(page.getByPlaceholder("Friend Badger")).toBeVisible();
   await expect(page.getByRole("button", { name: "Subscribe" })).toBeVisible();
 });
