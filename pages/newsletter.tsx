@@ -1,5 +1,4 @@
 import Head from "next/head";
-import MailchimpForm from "../components/newsletter/mailchimp-form";
 import { webHost } from "../lib/config";
 
 function ContactPage() {
