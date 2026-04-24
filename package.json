@@ -30,7 +30,7 @@
     "eslint-config-next": "15.1.8",
     "eslint-config-prettier": "^9.1.0",
     "next-build-cache": "^1.0.4",
-    "postcss": "^8.4.39",
+    "postcss": "^8.5.10",
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.5.2"
