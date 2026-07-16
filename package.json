@@ -21,7 +21,7 @@
     "@playwright/test": "^1.47.2",
     "@tailwindcss/postcss": "^4.3.2",
     "@tailwindcss/typography": "^0.5.20",
-    "@types/node": "^18.11.18",
+    "@types/node": "^24.0.0",
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
     "@types/react-mailchimp-subscribe": "^2.1.1",
