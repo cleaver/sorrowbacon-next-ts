@@ -11,8 +11,8 @@ function TagList({ tags }: Props) {
   }
   return (
     <div className="flex">
-      <div className="flex-shrink font-bold">Tags:</div>
-      <div className="flex-grow">
+      <div className="shrink font-bold">Tags:</div>
+      <div className="grow">
         <ul className="list-none m-0">
           {tags.map((tag) => {
             const slug = tag.slug;

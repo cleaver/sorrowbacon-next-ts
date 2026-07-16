@@ -12,6 +12,7 @@ function CopyClipboard({ text }: Props) {
   const linkRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setShow(false);
   }, [text]);
 
