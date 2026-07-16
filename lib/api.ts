@@ -4,12 +4,10 @@
  * API for static generation (SSG).
  *
  */
-import { accessCache } from "next-build-cache";
 import {
   apiKey,
   apiServer,
   archivePageSize,
-  buildCacheFile,
   revalidateInterval,
 } from "../lib/config";
 import {
@@ -122,17 +120,20 @@ async function getPrevNextMap(): Promise<object> {
  * @param slug identifies the comic.
  * @returns prev and next slug for the comic.
  */
+let prevNextCache: { map: object | null; expires: number } = {
+  map: null,
+  expires: 0,
+};
+
 export async function getPrevNextForSlug(slug: string) {
-  const cache = accessCache(buildCacheFile);
-
-  let map: any = await cache.get("prev-next-map");
-
-  if (!map) {
-    map = await getPrevNextMap();
-
-    await cache.put("prev-next-map", map, 1000 * revalidateInterval);
+  if (!prevNextCache.map || Date.now() > prevNextCache.expires) {
+    prevNextCache = {
+      map: await getPrevNextMap(),
+      expires: Date.now() + 1000 * revalidateInterval,
+    };
   }
 
+  const map: any = prevNextCache.map;
   const prevNext: PrevNextElement | null = map[slug] || null;
 
   return prevNext;
@@ -195,16 +196,20 @@ export async function getArchivePageCount() {
  *
  * @returns SiteSettings object.
  */
-export async function getCachedSiteSettings() {
-  const cache = accessCache(buildCacheFile);
-  let settings: SiteSettings | unknown = await cache.get("site-settings");
+let settingsCache: { settings: SiteSettings | null; expires: number } = {
+  settings: null,
+  expires: 0,
+};
 
-  if (!settings) {
-    settings = await getSiteSettings();
-    await cache.put("site-settings", settings, 1000 * revalidateInterval);
+export async function getCachedSiteSettings() {
+  if (!settingsCache.settings || Date.now() > settingsCache.expires) {
+    settingsCache = {
+      settings: await getSiteSettings(),
+      expires: Date.now() + 1000 * revalidateInterval,
+    };
   }
 
-  return settings as SiteSettings;
+  return settingsCache.settings;
 }
 
 /**

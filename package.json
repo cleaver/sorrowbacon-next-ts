@@ -3,40 +3,38 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "buildstart": "next build && next start",
-    "lint": "next lint",
-    "export": "next export"
+    "lint": "eslint ."
   },
   "dependencies": {
-    "next": "15.5.12",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "next": "16.2.10",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
     "react-mailchimp-subscribe": "^2.1.3",
     "react-markdown": "^9.0.1",
     "sharp": "^0.33.4"
   },
   "devDependencies": {
     "@playwright/test": "^1.47.2",
-    "@tailwindcss/typography": "^0.5.7",
+    "@tailwindcss/postcss": "^4.3.2",
+    "@tailwindcss/typography": "^0.5.20",
     "@types/node": "^18.11.18",
-    "@types/react": "19.1.5",
-    "@types/react-dom": "19.1.5",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
     "@types/react-mailchimp-subscribe": "^2.1.1",
-    "autoprefixer": "^10.4.19",
-    "eslint": "^8.57.1",
-    "eslint-config-next": "15.1.8",
-    "eslint-config-prettier": "^9.1.0",
-    "next-build-cache": "^1.0.4",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "16.2.10",
+    "eslint-config-prettier": "^10.1.8",
     "postcss": "^8.4.39",
     "prettier": "^3.3.3",
-    "tailwindcss": "^3.4.4",
+    "tailwindcss": "^4.3.2",
     "typescript": "^5.5.2"
   },
   "resolutions": {
-    "@types/react": "19.1.5",
-    "@types/react-dom": "19.1.5"
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3"
   }
 }

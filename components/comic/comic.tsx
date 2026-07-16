@@ -10,7 +10,6 @@ type Props = {
 function Comic({ image, imageAltText }: Props) {
   const imageUrl = image.url || "";
   const url = `${apiServer}${imageUrl}`;
-
   return (
     <Image
       src={url}
