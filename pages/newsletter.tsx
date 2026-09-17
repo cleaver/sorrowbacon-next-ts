@@ -20,14 +20,13 @@ function ContactPage() {
           Get updates about new comics and ideas in an occasional newsletter.
         </div>
         <div className="flex justify-center py-4">
-          <iframe
-            src="https://millieho.substack.com/embed?transparent=1"
-            width="480"
-            height="320"
-            style={{ border: 0, background: "transparent" }}
-            frameBorder="0"
-            scrolling="no"
-          ></iframe>
+          <a
+            href="https://millieho.substack.com/subscribe"
+            target="_self"
+            className="rounded-md bg-indigo-600 px-4 py-2 text-lg text-white"
+          >
+            Subscribe on Substack
+          </a>
         </div>
         <div>We won&apos;t sell your email address ever!</div>
       </article>

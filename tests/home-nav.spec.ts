@@ -26,5 +26,8 @@ test("contact link", async ({ page }) => {
 test("subscribe link", async ({ page }) => {
   await page.getByRole("link", { name: "Subscribe" }).click();
   await expect(page.getByRole("heading", { name: "Get Updates!" })).toBeVisible();
-  await expect(page.locator('iframe[src*="substack.com/embed"]')).toBeVisible();
+  await expect(page.getByRole("link", { name: "Subscribe on Substack" })).toHaveAttribute(
+    "href",
+    "https://millieho.substack.com/subscribe",
+  );
 });
